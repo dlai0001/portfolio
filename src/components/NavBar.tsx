@@ -2,6 +2,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link, Typography } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 type Props = {
     mode: 'light' | 'dark';
@@ -19,41 +21,47 @@ type Props = {
 };
 
 export default function NavBar({ mode, toggleTheme }: Props) {
-    const [open, setOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const muiTheme = useMuiTheme();
     const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
 
-        const close = () => setOpen(false);
+    const close = () => setMenuOpen(false);
 
-        const items: Array<[string, string]> = [
-            ['/', 'Home'],
-            ['/about', 'About'],
-            ['/experience', 'Experience'],
-            ['/skills', 'Skills'],
-        ];
+    const items: Array<[string, string]> = [
+        ['/', 'Home'],
+        ['/about', 'About'],
+        ['/experience', 'Experience'],
+        ['/skills', 'Skills'],
+    ];
 
-        const navLink = (to: string, label: string) => (
-            <NavLink
-                key={to}
-                to={to}
-                className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
-                onClick={close}
-            >
-                <Button component="span" color="inherit" disableElevation sx={{ textTransform: 'none' }}>
-                    {label}
-                </Button>
-            </NavLink>
-        );
+    const navLink = (to: string, label: string) => (
+        <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            onClick={close}
+        >
+            <Button component="span" color="inherit" disableElevation sx={{ textTransform: 'none' }}>
+                {label}
+            </Button>
+        </NavLink>
+    );
 
-        return (
-            <AppBar position="sticky" color="transparent" elevation={0} className="nav">
-                <Toolbar disableGutters className="nav-inner">
-                    <Box sx={{ flex: '1 1 auto' }}>
-                        <NavLink to="/" onClick={close} className="brand-link">
-                            David Lai
-                        </NavLink>
-                    </Box>
+    return (
+        <AppBar position="sticky" color="transparent" elevation={0} className="nav">
+            <Toolbar disableGutters className="nav-inner" sx={{
+                backgroundColor: muiTheme.palette.background.paper,
+                paddingX: { xs: 2, md: 4 },
+                display: 'flex',
+                justifyContent: 'space-between',
+            }}>
+                <Link to="/" className="brand-link" component={RouterLink} underline="none" color={muiTheme.palette.text.primary}>
+                    <Typography variant="h6" color="inherit" component="div" fontWeight="bold">
+                        David Lai
+                    </Typography>
+                </Link>
 
+                <Box display="flex" alignItems="center" gap={1} flexDirection="row">
                     {!isMobile && (
                         <Box component="nav" className="links" aria-label="Primary">
                             {items.map(([to, label]) => navLink(to, label))}
@@ -69,22 +77,23 @@ export default function NavBar({ mode, toggleTheme }: Props) {
 
                         {isMobile && (
                             <IconButton
-                                aria-label={open ? 'Close menu' : 'Open menu'}
+                                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
                                 className="mobile-toggle"
-                                onClick={() => setOpen((s) => !s)}
+                                onClick={() => setMenuOpen((s) => !s)}
                                 size="small"
                             >
-                                {open ? <CloseIcon /> : <MenuIcon />}
+                                {menuOpen ? <CloseIcon /> : <MenuIcon />}
                             </IconButton>
                         )}
                     </Box>
-                </Toolbar>
+                </Box>
+            </Toolbar>
 
-                {isMobile && (
-                    <Box className={`mobile-menu ${open ? 'open' : ''}`}>
-                        {items.map(([to, label]) => navLink(to, label))}
-                    </Box>
-                )}
-            </AppBar>
-        );
+            {isMobile && menuOpen && (
+                <Box className={`mobile-menu`}>
+                    {items.map(([to, label]) => navLink(to, label))}
+                </Box>
+            )}
+        </AppBar>
+    );
 }
