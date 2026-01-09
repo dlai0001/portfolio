@@ -59,7 +59,7 @@ const pillStyle: React.CSSProperties = {
     fontSize: "0.875rem",
 };
 
-export default function About(): JSX.Element {
+export default function About(): React.ReactElement {
     return (
         <main style={containerStyle} aria-labelledby="about-heading">
             <header style={headerStyle}>

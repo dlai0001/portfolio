@@ -92,7 +92,7 @@ const SkillBadge: React.FC<{ skill: Skill }> = ({ skill }) => {
     );
 };
 
-export default function Skills(): JSX.Element {
+export default function Skills(): React.ReactElement {
     return (
         <main style={containerStyle}>
             <header>
