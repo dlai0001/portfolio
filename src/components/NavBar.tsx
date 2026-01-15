@@ -29,7 +29,6 @@ export default function NavBar({ mode, toggleTheme }: Props) {
 
     const items: Array<[string, string]> = [
         ['/', 'Home'],
-        ['/about', 'About'],
         ['/experience', 'Experience'],
         ['/skills', 'Skills'],
     ];
