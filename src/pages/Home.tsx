@@ -1,133 +1,152 @@
-import React from "react";
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
-const styles: Record<string, React.CSSProperties> = {
-    container: {
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "48px 24px",
-        background: "linear-gradient(180deg,#0f172a 0%,#071126 100%)",
-        color: "#e6eef8",
-        fontFamily: "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
-    },
-    card: {
-        maxWidth: 980,
-        width: "100%",
-        background: "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02))",
-        borderRadius: 12,
-        padding: 28,
-        boxShadow: "0 6px 30px rgba(2,6,23,0.6)",
-        backdropFilter: "blur(6px)",
-    },
-    header: { display: "flex", gap: 20, alignItems: "center" },
-    avatar: {
-        width: 96,
-        height: 96,
-        borderRadius: "50%",
-        background: "#1f2937",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: 36,
-        fontWeight: 700,
-        color: "#e6eef8",
-        flexShrink: 0,
-    },
-    titleGroup: { display: "flex", flexDirection: "column" },
-    name: { fontSize: 28, margin: 0, color: "#fff" },
-    role: { margin: 0, color: "#9fb3d7", fontSize: 15 },
-    summary: { marginTop: 18, color: "#cfe6ff", lineHeight: 1.6 },
-    actions: { marginTop: 20, display: "flex", gap: 12, flexWrap: "wrap" },
-    buttonPrimary: {
-        padding: "10px 16px",
-        background: "#0ea5e9",
-        color: "#042033",
-        borderRadius: 8,
-        fontWeight: 600,
-        textDecoration: "none",
-    },
-    buttonGhost: {
-        padding: "10px 16px",
-        background: "transparent",
-        color: "#cfe6ff",
-        border: "1px solid rgba(255,255,255,0.08)",
-        borderRadius: 8,
-        textDecoration: "none",
-    },
-    meta: { marginTop: 22, color: "#9fb3d7", fontSize: 14 },
-    socials: { marginLeft: 8, display: "inline-flex", gap: 8 },
-    smallLink: { color: "#9fb3d7", textDecoration: "none" },
-};
+import resumeFile from '../assets/david-lai-resume.pdf';
 
 const Home: React.FC = () => {
-    return (
-        <main style={styles.container}>
-            <section style={styles.card} aria-labelledby="home-heading">
-                <header style={styles.header}>
-                    <div style={styles.avatar} aria-hidden>
-                        DL
-                    </div>
+  const theme = useTheme();
 
-                    <div style={styles.titleGroup}>
-                        <h1 id="home-heading" style={styles.name}>
-                            David Lai
-                        </h1>
-                        <p style={styles.role}>Full‑Stack Engineer · TypeScript · React</p>
-                    </div>
-                </header>
+  return (
+    <Box
+      component="main"
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        py: 6,
+        px: 3,
+      }}
+    >
+      <Container maxWidth="md">
+        <Paper
+          component="section"
+          aria-labelledby="home-heading"
+          elevation={0}
+          sx={{
+            p: 3.5,
+            background: theme.palette.mode === 'dark'
+              ? 'linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02))'
+              : theme.palette.background.paper,
+            backdropFilter: 'blur(6px)',
+          }}
+        >
+          {/* Header: Avatar + Title */}
+          <Stack
+            component="header"
+            direction="row"
+            spacing={2.5}
+            alignItems="center"
+            sx={{ mb: 2.5 }}
+          >
+            <Avatar
+              aria-hidden
+              sx={{
+                width: 96,
+                height: 96,
+                fontSize: 36,
+                fontWeight: 700,
+                flexShrink: 0,
+              }}
+            >
+              DL
+            </Avatar>
 
-                <p style={styles.summary}>
-                    I build reliable, accessible web applications with a focus on performance and delightful UX.
-                    Experienced in frontend architecture, component design, and end-to-end delivery for SaaS products.
-                </p>
+            <Stack spacing={0.5}>
+              <Typography
+                id="home-heading"
+                component="h1"
+                variant="h3"
+                sx={{ fontWeight: 700 }}
+              >
+                David Lai
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                Fullstack Web · AWS Archihtect · GraphQL
+              </Typography>
+            </Stack>
+          </Stack>
 
-                <div style={styles.actions}>
-                    <a
-                        href="/resume.pdf"
-                        style={styles.buttonPrimary}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Download resume (opens in new tab)"
-                    >
-                        Download Resume
-                    </a>
+          {/* Summary */}
+          <Typography
+            variant="body1"
+            sx={{ my: 2.5, lineHeight: 1.6 }}
+          >
+            I build reliable, accessible web applications with a focus on performance and delightful UX.
+            Experienced in frontend architecture, component design, and end-to-end delivery for SaaS products.
+          </Typography>
 
-                    <a
-                        href="mailto:david@example.com"
-                        style={styles.buttonGhost}
-                        aria-label="Send email"
-                    >
-                        Email
-                    </a>
+          {/* Action Buttons */}
+          <Stack
+            direction="row"
+            spacing={1.5}
+            sx={{ my: 2.5, flexWrap: 'wrap' }}
+          >
+            <Button
+              component="a"
+              href={resumeFile}
+              variant="contained"
+              color="primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download resume (opens in new tab)"
+            >
+              Download Resume
+            </Button>
 
-                    <a
-                        href="https://github.com/david"
-                        style={styles.smallLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="GitHub profile (opens in new tab)"
-                    >
-                        GitHub
-                    </a>
+            <Button
+              component="a"
+              href={`mailto:${String.fromCharCode(100,97,118,105,100,64,100,108,97,105,115,111,102,116,46,99,111,109)}`}
+              variant="outlined"
+              color="inherit"
+              aria-label="Send email"
+            >
+              Email
+            </Button>
 
-                    <a
-                        href="https://www.linkedin.com/in/david"
-                        style={styles.smallLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="LinkedIn profile (opens in new tab)"
-                    >
-                        LinkedIn
-                    </a>
-                </div>
+            <Button
+              component="a"
+              href="https://github.com/dlai0001"
+              variant="text"
+              color="inherit"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile (opens in new tab)"
+            >
+              GitHub
+            </Button>
 
-                <div style={styles.meta}>
-                    Based in San Francisco · Open to remote and local opportunities
-                </div>
-            </section>
-        </main>
-    );
+            <Button
+              component="a"
+              href="https://www.linkedin.com/in/david-lai-37211/"
+              variant="text"
+              color="inherit"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile (opens in new tab)"
+            >
+              LinkedIn
+            </Button>
+          </Stack>
+
+          {/* Meta */}
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            sx={{ display: 'block', mt: 2.75 }}
+          >
+            Based in Reading, PA · Open to remote and local opportunities
+          </Typography>
+        </Paper>
+      </Container>
+    </Box>
+  );
 };
 
 export default Home;

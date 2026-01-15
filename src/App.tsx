@@ -28,7 +28,7 @@ function App() {
       <CssBaseline />
       <BrowserRouter basename="/portfolio">
         <NavBar mode={mode} toggleTheme={toggleTheme} />
-        <Routes>
+        <Routes>          
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/skills" element={<Skills />} />
