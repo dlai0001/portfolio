@@ -38,9 +38,9 @@ export default function NavBar({ mode, toggleTheme }: Props) {
             key={to}
             to={to}
             className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
-            onClick={close}
+            onClick={close}            
         >
-            <Button component="span" color="inherit" disableElevation sx={{ textTransform: 'none' }}>
+            <Button component="span" color="primary" disableElevation sx={{ textTransform: 'none' }}>
                 {label}
             </Button>
         </NavLink>

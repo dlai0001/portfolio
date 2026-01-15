@@ -1,4 +1,10 @@
-import React from "react";
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material/styles';
+import React from 'react';
 
 type Skill = {
     name: string;
@@ -61,90 +67,110 @@ const SKILLS: Record<string, Skill[]> = {
     ],
 };
 
-const containerStyle: React.CSSProperties = {
-    maxWidth: 900,
-    margin: "2rem auto",
-    padding: "0 1rem",
-    fontFamily: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
-    color: "#111827",
-};
-
-const gridStyle: React.CSSProperties = {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "1rem",
-    marginTop: "1rem",
-};
-
-const cardStyle: React.CSSProperties = {
-    background: "#ffffff",
-    border: "1px solid #e5e7eb",
-    borderRadius: 8,
-    padding: "0.75rem",
-};
-
-const skillRowStyle: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: "0.5rem",
-    marginTop: "0.5rem",
-};
-
-const barOuter: React.CSSProperties = {
-    flex: 1,
-    height: 8,
-    background: "#f3f4f6",
-    borderRadius: 999,
-    overflow: "hidden",
-    marginLeft: 12,
-};
-
 const SkillBadge: React.FC<{ skill: Skill }> = ({ skill }) => {
+    const theme = useTheme();
     const pct = Math.max(0, Math.min(100, skill.level ?? 0));
     return (
-        <div style={skillRowStyle}>
-            <div style={{ minWidth: 120 }}>{skill.name}</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div style={barOuter} aria-hidden>
-                    <div
-                        style={{
+        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1} sx={{ mt: 0.5 }}>
+            <Typography variant="body2" sx={{ minWidth: 120 }}>
+                {skill.name}
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1, ml: 1.5 }}>
+                <Box
+                    aria-hidden
+                    sx={{
+                        flex: 1,
+                        height: 8,
+                        background: theme.palette.action.disabled,
+                        borderRadius: 999,
+                        overflow: "hidden",
+                    }}
+                >
+                    <Box
+                        sx={{
                             width: `${pct}%`,
                             height: "100%",
-                            background: "#2563eb",
+                            background: theme.palette.primary.main,
                             borderRadius: 999,
                             transition: "width 300ms ease",
                         }}
                     />
-                </div>
-                <div style={{ minWidth: 36, textAlign: "right", fontSize: 13 }}>{skill.level ? `${skill.level}%` : "—"}</div>
-            </div>
-        </div>
+                </Box>
+                <Typography variant="caption" sx={{ minWidth: 36, textAlign: "right" }}>
+                    {skill.level ? `${skill.level}%` : "—"}
+                </Typography>
+            </Stack>
+        </Stack>
     );
 };
 
 export default function Skills(): React.ReactElement {
-    return (
-        <main style={containerStyle}>
-            <header>
-                <h1 style={{ margin: 0, fontSize: "1.75rem" }}>Skills</h1>
-                <p style={{ marginTop: 8, color: "#374151" }}>
-                    A summary of core technical skills and tooling. Levels are approximate and intended for quick reference.
-                </p>
-            </header>
+    const theme = useTheme();
 
-            <section style={gridStyle} aria-labelledby="skills-heading">
-                {Object.entries(SKILLS).map(([category, skills]) => (
-                    <div key={category} style={cardStyle} role="region" aria-label={category}>
-                        <h2 style={{ margin: 0, fontSize: "1.05rem" }}>{category}</h2>
-                        <div style={{ marginTop: 8 }}>
-                            {skills.map((s) => (
-                                <SkillBadge key={s.name} skill={s} />
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </section>
-        </main>
+    return (
+        <Box
+            component="main"
+            sx={{
+                minHeight: '100vh',
+                py: 6,
+                px: 3,
+            }}
+        >
+            <Container maxWidth="md">
+                <Box component="header" sx={{ mb: 4 }}>
+                    <Typography
+                        component="h1"
+                        variant="h3"
+                        sx={{ fontWeight: 700, mb: 1 }}
+                    >
+                        Skills
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                        A summary of core technical skills and tooling. Levels are approximate and intended for quick reference.
+                    </Typography>
+                </Box>
+
+                <Box
+                    component="section"
+                    aria-labelledby="skills-heading"
+                    sx={{
+                        display: 'grid',
+                        gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+                        gap: 2,
+                        mt: 2,
+                    }}
+                >
+                    {Object.entries(SKILLS).map(([category, skills]) => (
+                        <Paper
+                            key={category}
+                            elevation={0}
+                            component="div"
+                            role="region"
+                            aria-label={category}
+                            sx={{
+                                p: 2,
+                                background: theme.palette.mode === 'dark'
+                                    ? 'linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02))'
+                                    : theme.palette.background.paper,
+                                backdropFilter: 'blur(6px)',
+                            }}
+                        >
+                            <Typography
+                                component="h2"
+                                variant="h6"
+                                sx={{ fontWeight: 700, mb: 1 }}
+                            >
+                                {category}
+                            </Typography>
+                            <Stack spacing={0}>
+                                {skills.map((s) => (
+                                    <SkillBadge key={s.name} skill={s} />
+                                ))}
+                            </Stack>
+                        </Paper>
+                    ))}
+                </Box>
+            </Container>
+        </Box>
     );
 }
