@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const common = {
   typography: {
     fontFamily: [
-      'Inter',
+      'Calibre',
       'system-ui',
       '-apple-system',
       'BlinkMacSystemFont',
