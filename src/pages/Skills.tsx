@@ -6,27 +6,58 @@ type Skill = {
 };
 
 const SKILLS: Record<string, Skill[]> = {
-    Languages: [
-        { name: "TypeScript", level: 85 },
-        { name: "JavaScript (ES6+)", level: 90 },
-        { name: "HTML & CSS", level: 90 },
-        { name: "Python", level: 70 },
-    ],
-    Frameworks: [
+    Frontend: [
         { name: "React", level: 90 },
-        { name: "Next.js", level: 80 },
-        { name: "Node.js", level: 75 },
+        { name: "React Native", level: 80 },
+        { name: "Angular", level: 70 },
+        { name: "Material UI", level: 85 },
+        { name: "TypeScript", level: 90 },
+        { name: "D3", level: 75 },
+        { name: "Web Performance", level: 80 },
+        { name: "Front-end Architecture", level: 85 },
     ],
-    Tools: [
-        { name: "Git", level: 85 },
-        { name: "Webpack", level: 70 },
-        { name: "Vite", level: 65 },
-        { name: "Docker", level: 60 },
+    "Backend / APIs": [
+        { name: "Node.js", level: 85 },
+        { name: "ExpressJS", level: 80 },
+        { name: "Apollo GraphQL", level: 85 },
+        { name: "GraphQL Schema Design", level: 85 },
+        { name: "Python/Django", level: 75 },
+        { name: "Java/Spring Boot", level: 75 },
+        { name: "REST API design", level: 85 },
+        { name: "Microservices Architecture", level: 80 },
     ],
-    "Other Skills": [
-        { name: "Testing (Jest, RTL)", level: 70 },
-        { name: "Accessibility", level: 75 },
-        { name: "UI / UX basics", level: 65 },
+    "Cloud / Infrastructure": [
+        { name: "AWS (Certified Solutions Architect)", level: 85 },
+        { name: "AWS Lambda", level: 80 },
+        { name: "DynamoDB", level: 80 },
+        { name: "Docker", level: 75 },
+        { name: "CI/CD", level: 80 },
+        { name: "AWS Secrets Manager", level: 75 },
+        { name: "AWS Cert Manager", level: 75 },
+        { name: "Open Telemetry", level: 70 },
+        { name: "ELK Stack", level: 70 },
+        { name: "Splunk", level: 70 },
+        { name: "New Relic", level: 70 },
+    ],
+    "Programming Languages": [
+        { name: "JavaScript/TypeScript", level: 90 },
+        { name: "Python", level: 75 },
+        { name: "Java", level: 75 },
+        { name: "C#", level: 70 },
+        { name: "SQL", level: 80 },
+    ],
+    "Best Practices": [
+        { name: "Domain Driven Design (DDD)", level: 75 },        
+        { name: "Automated Testing", level: 80 },
+        { name: "Debugging (JS/Node)", level: 85 },
+        { name: "JS Profiling (JS/Node)", level: 80 },
+        { name: "Load Testing", level: 80 },
+        { name: "RFCs/Tech Specs", level: 80 },
+        { name: "System Design", level: 80 },
+        { name: "Stakeholder Leadership", level: 75 },
+        { name: "UML Architecture", level: 70 },
+        { name: "AWS Well Architected Framework", level: 80 },
+        { name: "EVA Architecture", level: 75 },
     ],
 };
 
