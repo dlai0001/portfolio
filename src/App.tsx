@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import About from './pages/About'
 import NotFound from './pages/NotFound'
 import Skills from './pages/Skills'
 import Experience from './pages/Experience'
@@ -30,7 +29,6 @@ function App() {
         <NavBar mode={mode} toggleTheme={toggleTheme} />
         <Routes>          
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="*" element={<NotFound />} />

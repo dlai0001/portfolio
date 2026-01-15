@@ -68,7 +68,7 @@ const Home: React.FC = () => {
                 David Lai
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                Fullstack Web · AWS Archihtect · GraphQL
+                Fullstack Web Developer · AWS Cloud Architect · GraphQL Expert
               </Typography>
             </Stack>
           </Stack>
