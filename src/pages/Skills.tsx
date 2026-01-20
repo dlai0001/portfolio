@@ -53,6 +53,7 @@ const SKILLS: Record<string, Skill[]> = {
         { name: "SQL", level: 80 },
     ],
     "Best Practices": [
+        { name: "Web Application Architecture", level: 90 },
         { name: "Domain Driven Design (DDD)", level: 75 },        
         { name: "Automated Testing", level: 80 },
         { name: "Debugging (JS/Node)", level: 85 },
@@ -72,7 +73,7 @@ const SkillBadge: React.FC<{ skill: Skill }> = ({ skill }) => {
     const pct = Math.max(0, Math.min(100, skill.level ?? 0));
     return (
         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1} sx={{ mt: 0.5 }}>
-            <Typography variant="body2" sx={{ minWidth: 120 }}>
+            <Typography variant="body2" sx={{ minWidth: 120, flexBasis: "50%", }}>
                 {skill.name}
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1, ml: 1.5 }}>
@@ -83,7 +84,7 @@ const SkillBadge: React.FC<{ skill: Skill }> = ({ skill }) => {
                         height: 8,
                         background: theme.palette.action.disabled,
                         borderRadius: 999,
-                        overflow: "hidden",
+                        overflow: "hidden",                        
                     }}
                 >
                     <Box
