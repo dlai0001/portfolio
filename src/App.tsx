@@ -29,6 +29,7 @@ function App() {
         <NavBar mode={mode} toggleTheme={toggleTheme} />
         <Routes>          
           <Route path="/" element={<Home />} />
+          <Route path="/index.html" element={<Home />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="*" element={<NotFound />} />
