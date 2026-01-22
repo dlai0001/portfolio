@@ -3,12 +3,14 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 
 type Skill = {
     name: string;
     level?: number; // 0-100, optional
+    link?: string; // optional link to more info
 };
 
 const SKILLS: Record<string, Skill[]> = {
@@ -31,9 +33,17 @@ const SKILLS: Record<string, Skill[]> = {
         { name: "Java/Spring Boot", level: 75 },
         { name: "REST API design", level: 85 },
         { name: "Microservices Architecture", level: 80 },
+        
+    ],
+    "Databases": [
+        { name: "PostgreSQL", level: 90 },
+        { name: "AWS Aurora", level: 90 },
+        { name: "MySQL", level: 90 },        
+        { name: "DynamoDB", level: 80 },
+        { name: "Redis", level: 70 },
     ],
     "Cloud / Infrastructure": [
-        { name: "AWS (Certified Solutions Architect)", level: 85 },
+        { name: "AWS (Certified Solutions Architect)", level: 85, link: 'https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/linked_in_profile' },
         { name: "AWS Lambda", level: 80 },
         { name: "DynamoDB", level: 80 },
         { name: "Docker", level: 75 },
@@ -73,9 +83,23 @@ const SkillBadge: React.FC<{ skill: Skill }> = ({ skill }) => {
     const pct = Math.max(0, Math.min(100, skill.level ?? 0));
     return (
         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1} sx={{ mt: 0.5 }}>
-            <Typography variant="body2" sx={{ minWidth: 120, flexBasis: "50%", }}>
-                {skill.name}
-            </Typography>
+            {skill.link ? (
+                <Link
+                    href={skill.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    underline="hover"
+                    sx={{ minWidth: 120, flexBasis: "50%", display: 'inline' }}
+                >
+                    <Typography variant="body2" component="span">
+                        {skill.name}
+                    </Typography>
+                </Link>
+            ) : (
+                <Typography variant="body2" sx={{ minWidth: 120, flexBasis: "50%", }}>
+                    {skill.name}
+                </Typography>
+            )}
             <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1, ml: 1.5 }}>
                 <Box
                     aria-hidden
