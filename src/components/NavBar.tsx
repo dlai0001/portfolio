@@ -31,6 +31,7 @@ export default function NavBar({ mode, toggleTheme }: Props) {
         ['/', 'Home'],
         ['/experience', 'Experience'],
         ['/skills', 'Skills'],
+        ['/jobfit', 'Job Fit'],
     ];
 
     const navLink = (to: string, label: string) => (
