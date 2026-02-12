@@ -1,0 +1,146 @@
+Capital One logo
+Principal Software Engineer
+Principal Software Engineer
+Capital One · Full-timeCapital One · Full-time
+Jan 2023 - Present · 3 yrs 2 mosJan 2023 to Present · 3 yrs 2 mos
+North America · RemoteNorth America · Remote
+Angular / Java developer, AWS solutions architect associate
+Angular / Java developer, AWS solutions architect associate
+Skills: OTEL (Open Telemetry) · Docker · Representational State Transfer (REST) · New Relic · Continuous Integration · Splunk · Solution Architecture · JavaScript · Amazon Web Services (AWS) · Python (Programming Language) · Cypress.io · Angular · Jenkins · Scrum · Shell Scripting · Front-End Development · Java · Node.js
+Skills: OTEL (Open Telemetry) · Docker · Representational State Transfer (REST) · New Relic · Continuous Integration · Splunk · Solution Architecture · JavaScript · Amazon Web Services (AWS) · Python (Programming Language) · Cypress.io · Angular · Jenkins · Scrum · Shell Scripting · Front-End Development · Java · Node.js
+PlayVS logo
+Sr. Frontend Developer
+Sr. Frontend Developer
+PlayVSPlayVS
+Sep 2020 - Sep 2022 · 2 yrs 1 moSep 2020 to Sep 2022 · 2 yrs 1 mo
+React / GraphQL Developer
+React / GraphQL Developer
+Skills: OTEL (Open Telemetry) · Representational State Transfer (REST) · Continuous Integration · Solution Architecture · Cypress.io · Shell Scripting · Material-UI · Front-End Development · Node.js
+Skills: OTEL (Open Telemetry) · Representational State Transfer (REST) · Continuous Integration · Solution Architecture · Cypress.io · Shell Scripting · Material-UI · Front-End Development · Node.js
+Workwell logo
+Sr. Fullstack Developer
+Sr. Fullstack Developer
+WorkwellWorkwell
+Jun 2019 - Jul 2020 · 1 yr 2 mosJun 2019 to Jul 2020 · 1 yr 2 mos
+React Native / GraphQL / Django Fullstack Developer. 
+React Native / GraphQL / Django Fullstack Developer. 
+Skills: Representational State Transfer (REST) · Continuous Integration · Django · Solution Architecture · React Native · Shell Scripting · Material-UI · Front-End Development · Node.js
+Skills: Representational State Transfer (REST) · Continuous Integration · Django · Solution Architecture · React Native · Shell Scripting · Material-UI · Front-End Development · Node.js
+Surf Air logo
+Fullstack Developer
+Fullstack Developer
+Surf AirSurf Air
+Jul 2018 - Jun 2019 · 1 yrJul 2018 to Jun 2019 · 1 yr
+Santa Monica, CaliforniaSanta Monica, California
+Skills: Representational State Transfer (REST) · Continuous Integration · Django · Shell Scripting · Front-End Development · Node.js
+Skills: Representational State Transfer (REST) · Continuous Integration · Django · Shell Scripting · Front-End Development · Node.js
+Shippabo logo
+Sr. Fullstack Developer
+Sr. Fullstack Developer
+ShippaboShippabo
+Feb 2017 - Jul 2017 · 6 mosFeb 2017 to Jul 2017 · 6 mos
+Los Angeles Metropolitan AreaLos Angeles Metropolitan Area
+MEAN stack developer, Mongo Angular JS, Express, Nodejs.
+MEAN stack developer, Mongo Angular JS, Express, Nodejs.
+Skills: Representational State Transfer (REST) · Continuous Integration · Shell Scripting · Front-End Development · Node.js
+Skills: Representational State Transfer (REST) · Continuous Integration · Shell Scripting · Front-End Development · Node.js
+AXS logo
+Sr. SDET
+Sr. SDET
+AXS TicketingAXS Ticketing
+Apr 2016 - Feb 2017 · 11 mosApr 2016 to Feb 2017 · 11 mos
+Los Angeles, CALos Angeles, CA
+Mobile Automation
+TestRail / Jira Rollout
+Test Lead
+Test automation and framework design
+Mobile Automation TestRail / Jira Rollout Test Lead Test automation and framework design
+Skills: Representational State Transfer (REST) · Continuous Integration · C# · Jenkins · Shell Scripting · Front-End Development
+Skills: Representational State Transfer (REST) · Continuous Integration · C# · Jenkins · Shell Scripting · Front-End Development
+Verizon Media Platform logo
+Lead Sys Cslt-S/W Eng / SDET
+Lead Sys Cslt-S/W Eng / SDET
+Verizon Digital Media ServicesVerizon Digital Media Services
+Jul 2015 - Apr 2016 · 10 mosJul 2015 to Apr 2016 · 10 mos
+Playa Vista, CAPlaya Vista, CA
+Rapid prototyping of frameworks, integrations, and CI build systems.
+Rapid prototyping of frameworks, integrations, and CI build systems.
+Skills: Representational State Transfer (REST) · Continuous Integration · C# · Jenkins · Shell Scripting
+Skills: Representational State Transfer (REST) · Continuous Integration · C# · Jenkins · Shell Scripting
+1-800-DENTIST logo
+Software Developer in Test
+Software Developer in Test
+1-800-DENTIST1-800-DENTIST
+May 2014 - Jul 2015 · 1 yr 3 mosMay 2014 to Jul 2015 · 1 yr 3 mos
+Los Angeles, CALos Angeles, CA
+Test framework design and training
+Test framework design and training
+Skills: Representational State Transfer (REST) · Continuous Integration · C# · Shell Scripting · Front-End Development
+Skills: Representational State Transfer (REST) · Continuous Integration · C# · Shell Scripting · Front-End Development
+Sr. SDET / Automation Lead
+Sr. SDET / Automation Lead
+Sr. SDET / Automation Lead
+WiredriveWiredrive
+Dec 2012 - May 2014 · 1 yr 6 mosDec 2012 to May 2014 · 1 yr 6 mos
+Marina Del Rey, CAMarina Del Rey, CA
+Designed WTFramework, a micro framework for highly configurable web tests in Python.
+Setup Bamboo CI process for running selenium and curl smoke tests upon every check-in and nightly regression plans that run a full battery of tests across a wide range of popular browsers on selenium grid. Load testing of architectural changes.
+Designed WTFramework, a micro framework for highly configurable web tests in Python. Setup Bamboo CI process for running selenium and curl smoke tests upon every check-in and nightly regression plans that run a full battery of tests across a wide range of popular browsers on selenium grid. Load testing of architectural changes.
+Skills: Representational State Transfer (REST) · Continuous Integration · Django · Splunk · Shell Scripting
+Skills: Representational State Transfer (REST) · Continuous Integration · Django · Splunk · Shell Scripting
+Internet Brands logo
+Sr. QA Engineer / Test Lead
+Sr. QA Engineer / Test Lead
+Internet BrandsInternet Brands
+May 2012 - Dec 2012 · 8 mosMay 2012 to Dec 2012 · 8 mos
+El Segundo, CA, USAEl Segundo, CA, USA
+* Leading test efforts for Carsdirect.com and other sites under the Automotive group umbrella.
+* Developed high level test strategies to reduce the large number of defects that were introduced during patch releases.
+* Instituted new Jira guidelines for the Automotive group to reduce the number of duplicate issues filed and more accurately communicate the severity and level of impact of bugs.
+* Researched and recommended the Adoption of Test Management Solution to improve Test Case Management, Test Planning, and Test Coverage Reporting.
+* Wrote and demoed a proof of concept for Feature Driven Testing automation. Some concepts are in the process of being incorporated.
+* Leading test efforts for Carsdirect.com and other sites under the Automotive group umbrella. * Developed high level test strategies to reduce the large number of defects that were introduced during patch releases. * Instituted new Jira guidelines for the Automotive group to reduce the number of duplicate issues filed and more accurately communicate the severity and level of impact of bugs. * Researched and recommended the Adoption of Test Management Solution to improve Test Case Management, Test Planning, and Test Coverage Reporting. * Wrote and demoed a proof of concept for Feature Driven Testing automation. Some concepts are in the process of being incorporated.
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+CCC Intelligent Solutions logo
+Software Engineer in Test
+Software Engineer in Test
+CCC Information ServicesCCC Information Services
+Aug 2011 - May 2012 · 10 mosAug 2011 to May 2012 · 10 mos
+Cerritos, CaCerritos, Ca
+*Designed and architected a custom from the ground up a Keyword driven framework that can handle large amounts of data in a manageable way
+*Created CI setup to run automated tests on a nightly basis
+*Trained engineers in Test both on shore and offshore in producing well designed automated tests.
+*Designed and architected a custom from the ground up a Keyword driven framework that can handle large amounts of data in a manageable way *Created CI setup to run automated tests on a nightly basis *Trained engineers in Test both on shore and offshore in producing well designed automated tests.
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+Citrix logo
+Senior QA Automation Engineer
+Senior QA Automation Engineer
+Citrix OnlineCitrix Online
+Apr 2008 - Aug 2011 · 3 yrs 5 mosApr 2008 to Aug 2011 · 3 yrs 5 mos
+* Developing and Maintaining QA's automated testing framework.
+* Automation Training
+* Researching new technologies relating to automated testing.
+* Testing/Automation of RIA (Rich Internet Applications)
+* Developing and Maintaining QA's automated testing framework. * Automation Training * Researching new technologies relating to automated testing. * Testing/Automation of RIA (Rich Internet Applications)
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+Citrix logo
+QA Egineer
+QA Egineer
+Citrix OnlineCitrix Online
+2005 - 2008 · 3 yrs2005 to 2008 · 3 yrs
+2005-06 : Test Lead/Tester for GoToAssist at Citrix Online
+As the test lead for GoToAssist, I was responsible leading a team of 8 testers during the latter half of GoToAssist version 6, and lead the testing efforts GoToAssist version 7 development. As the lead, I was responsible for delegating testing tasks, reporting results, as well as participating in key meetings such as software design meetings and triage meetings.; As a SQA Tester, worked on testing projects in GoToMyPC, GoToMeeting, and GoToAssist. I reviewed design specs, wrote and executed test plans and test cases. As a tester, I worked on the GoToAssist v6.0 and GoToMeeting v1.0 releases.
+2005-06 : Test Lead/Tester for GoToAssist at Citrix Online As the test lead for GoToAssist, I was responsible leading a team of 8 testers during the latter half of GoToAssist version 6, and lead the testing efforts GoToAssist version 7 development. As the lead, I was responsible for delegating testing tasks, reporting results, as well as participating in key meetings such as software design meetings and triage meetings.; As a SQA Tester, worked on testing projects in GoToMyPC, GoToMeeting, and GoToAssist. I reviewed design specs, wrote and executed test plans and test cases. As a tester, I worked on the GoToAssist v6.0 and GoToMeeting v1.0 releases.
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+Skills: Representational State Transfer (REST) · Continuous Integration · Jenkins · Shell Scripting
+SQA Tester
+SQA Tester
+SQA Tester
+2004-052004-05
+Apr 2003 - 2005 · 1 yr 10 mosApr 2003 to 2005 · 1 yr 10 mos
+2005-06 : Responsible for reviewing requirements, drafting test plans and test cases, and executing black box tests for products such as GoToMyPC and GoToAssist.
+2005-06 : Responsible for reviewing requirements, drafting test plans and test cases, and executing black box tests for products such as GoToMyPC and GoToAssist.
+Skills: Representational State Transfer (REST) · Jenkins · Shell Scripting

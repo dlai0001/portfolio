@@ -9,6 +9,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material'
 import NavBar from './components/NavBar'
 
 
+
 function App() {
   const { theme, toggleTheme, mode } = useAppTheme();
 

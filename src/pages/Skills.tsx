@@ -14,6 +14,13 @@ type Skill = {
 };
 
 const SKILLS: Record<string, Skill[]> = {
+    "Programming Languages": [
+        { name: "JavaScript/TypeScript", level: 95 },
+        { name: "Python", level: 80 },
+        { name: "Java", level: 75 },
+        { name: "C#", level: 70 },
+        { name: "SQL", level: 90 },
+    ],
     Frontend: [
         { name: "React", level: 90 },
         { name: "React Native", level: 80 },
@@ -44,24 +51,16 @@ const SKILLS: Record<string, Skill[]> = {
     ],
     "Cloud / Infrastructure": [
         { name: "AWS (Certified Solutions Architect)", level: 85, link: 'https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/linked_in_profile' },
-        { name: "AWS Lambda", level: 80 },
-        { name: "DynamoDB", level: 80 },
+        { name: "AWS Lambda", level: 80 },        
         { name: "Docker", level: 75 },
-        { name: "CI/CD", level: 80 },
-        { name: "AWS Secrets Manager", level: 75 },
-        { name: "AWS Cert Manager", level: 75 },
+        { name: "CI/CD", level: 90 },
+        { name: "AWS Secrets Manager", level: 85 },
+        { name: "AWS Cert Manager", level: 85 },
         { name: "Open Telemetry", level: 70 },
         { name: "ELK Stack", level: 70 },
         { name: "Splunk", level: 70 },
         { name: "New Relic", level: 70 },
-    ],
-    "Programming Languages": [
-        { name: "JavaScript/TypeScript", level: 90 },
-        { name: "Python", level: 75 },
-        { name: "Java", level: 75 },
-        { name: "C#", level: 70 },
-        { name: "SQL", level: 80 },
-    ],
+    ],    
     "Best Practices": [
         { name: "Web Application Architecture", level: 90 },
         { name: "Domain Driven Design (DDD)", level: 75 },        
