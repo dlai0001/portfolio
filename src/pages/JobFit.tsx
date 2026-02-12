@@ -39,7 +39,7 @@ const JobFit: React.FC = () => {
             const resultText = typeof data.result === 'string' ? data.response : JSON.stringify(data.response, null, 2);
             // clean up excessive newlines
             const resultTextCleaned = resultText.replace(/\n{3,}/g, '\n\n');
-            setResult(resultText);
+            setResult(resultTextCleaned);
         } catch (error) {
             setResult(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
         } finally {
