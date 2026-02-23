@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
+import { getCaptchaToken } from '../libs/recaptcha-helper';
 
 const generateSessionId = (): string => {
         return `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
@@ -24,19 +25,27 @@ const JobFit: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true);
+        setIsLoading(true);        
         try {
             if (textValue.length === 0) {
                 setIsLoading(false);
                 return;
             }
+
+            const captchaToken = (await (getCaptchaToken as any)() as unknown as string);
+
+
             // Replace with your actual API endpoint
             const response = await fetch('https://f57q3gtd4n45u5gwrxtavee6au0pmpjo.lambda-url.us-east-1.on.aws/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ prompt: textValue, sessionId: generateSessionId() }),
+                body: JSON.stringify({ 
+                    prompt: textValue, 
+                    sessionId: generateSessionId(),
+                    captchaToken 
+                }),
             });
             
             const data = await response.json();
