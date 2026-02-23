@@ -32,8 +32,7 @@ const JobFit: React.FC = () => {
                 return;
             }
 
-            const captchaToken = (await (getCaptchaToken as any)() as unknown as string);
-
+            const captchaToken = (await getCaptchaToken() as unknown as string);
 
             // Replace with your actual API endpoint
             const response = await fetch('https://f57q3gtd4n45u5gwrxtavee6au0pmpjo.lambda-url.us-east-1.on.aws/', {
