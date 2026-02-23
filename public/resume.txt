@@ -1,0 +1,67 @@
+10+ years building high-scale web platforms, leading front-end architecture, and designing GraphQL and service-oriented solutions. Experience driving technical strategy, modernizing legacy systems, mentoring engineers, and partnering with product/security stakeholders across organizations. Strong breadth across React/Angular, Node, GraphQL, AWS, and distributed system design.
+Skills:
+Frontend: React, React Native, Angular, Material UI, TypeScript, D3, Apollo Client, 
+Backend / APIs: Node.js, ExpressJS, Apollo GraphQL, Python/Django, Java/Spring Boot, REST API design, Microservices Architecture, AWS Bedrock, AWS Sagemaker
+Cloud / Infrastructure: AWS (Certified Solutions Architect Associate), AWS Certified AI Practitioner, AWS Lambda, DynamoDB, Docker, CI/CD, AWS Secrets Manager, AWS Cert Manager, Open Telemetry, ELK Stack, Splunk, New Relic, Load Testing, JMeter, Locust.io, AWS S3
+Programming Languages: JavaScript/TypeScript, Python, Java, C#, SQL
+Best Practices: GraphQL Schema Design, Cloud Architecture, Domain Driven Design (DDD), Automated Testing, Debugging (JS/Node), RFCs/Tech Specs, System Design and Architecture, Stakeholder leadership, UML Architecture, AWS Well Architected Framework, EVA Architecture, Web Performance, Front-end Architecture, Load and Performance Testing
+Professional Work Experience:
+Capital One: Principal Engineer              			Jan 2023 - Present
+Front-end : Angular
+Back-end : Spring-Boot, AWS Lambda, DynamoDB
+Responsibilities:  Spec designs, implementation, Infrastructure (AWS), Onboarding new lines of businesses to using our home grown identity solutions.
+Work with security researchers to implement the latest cybersecurity measures.
+Mentor Jr. Engineers and Interns.
+Notable projects:  App migration to AWS Secrets Manager, Redesign of Case Details Page, Migration to using AWS Cert Manager, Worked with notable external partners to onboard identity solutions.
+PlayVs: Front End Lead / GraphQL developer                         Sept 2020 - Oct 2022
+Lead front end architecture and development, designing and maintaining the GraphQL schema, and backend development.  (80%/20% FE/BE dev ratio)
+Writing RFCs and Tech Specs setting up best practices and future direction of our technology.
+Working with UI designers and product owners to reimagine the product using modern ui frameworks and design.
+Mentor Jr Engineers and monitor their work.
+Notable projects: Revamped Onboarding flow, Notification Center, Revamped Dashboard, Revamped UI theming system, Billing usage data visualization
+
+Workwell: Lead Developer					      July 2019 - Sep 2020
+Frontend lead developer and architect
+React Native / Graphql / Django Graphene full stack development
+Architected web/react native app
+Developed and shipped features such as account management, chat via websockets, typeahead search, drag and drop file uploads, graphql subscriptions.
+
+SurfAir: Full-stack Developer					      July 2018 - June 2019
+NodeJS/Express, Python/Django, AngularJS, React
+Reviewed code and mentored junior engineers.
+Worked with member management and accounting to maintain and develop new features for e-commerce, billing systems (Zuora), and flight reservation systems.
+Migrated legacy systems in AngularJS and NodeJS to Python/Django and React.
+Developed and supported e-commerce and flight booking APIs.
+Mentor Jr. Engineers and perform code reviews.
+Breeze Orthodontics: General Manager			       July 2017 - July 2018
+HR, Operations Manager, Logistics, Training, Sales & Marketing, IT, 3D Smile Design
+Online marketing - Hubspot, Google Analytics, Adwords, Website Design
+Turned around a dental practice losing -$40k/year to generating over $300k income/yr
+Implemented 3D printing and 3D smile design process
+Hire, train, and manage both office and chair side staff.
+Shippabo: Full-stack Developer					       Feb  2017 - July 2017
+MEAN Stack - Mongo Express AngularJS NodeJS
+Developed real time chat collaboration feature using SocketIO and AngularJS
+Created responsive emails using react based email framework, MJML.
+Generated PDF documents using headless browser and CSS.
+Backend ecom integrations with accounting system Xero
+
+15+ years of SDET Experience prior to switching careers to web development.
+(Available upon request)
+
+Education:
+Masters in Business Administration, MBA - Pepperdine Graziadio Business School 2018
+
+Bachelor of Science, Computer Science - UC Santa Barbara, 2003
+
+Product Management Intensive Course - General Assembly, 2013
+
+AWS Certified Solutions Architect Associate 2023 - https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/public_url
+AWS Certified AI Practitioner 2026 - https://www.credly.com/badges/ebc848e3-9606-4e74-bc3a-d58a2723919e/public_url 
+Awards & Honors
+1st Place, Techweek LA hackathon						          Nov 1-2, 2014
+Created a responsive mobile web app that help people adopt dogs via a Tinder-like interface.
+http://challengepost.com/software/adoptable
+
+2nd Place, Hack4LA hackathon						          June 1-2, 2013
+Helping people share their wasted produce. Won trip to the White House Data.gov unveiling. http://challengepost.com/software/urbanfruit-ly
