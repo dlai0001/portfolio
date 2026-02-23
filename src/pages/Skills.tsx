@@ -16,8 +16,8 @@ type Skill = {
 const SKILLS: Record<string, Skill[]> = {
     "Programming Languages": [
         { name: "JavaScript/TypeScript", level: 95 },
-        { name: "Python", level: 80 },
-        { name: "Java", level: 75 },
+        { name: "Python", level: 85 },
+        { name: "Java", level: 80 },
         { name: "C#", level: 70 },
         { name: "SQL", level: 90 },
     ],
@@ -39,7 +39,7 @@ const SKILLS: Record<string, Skill[]> = {
         { name: "Python/Django", level: 75 },
         { name: "Java/Spring Boot", level: 75 },
         { name: "REST API design", level: 85 },
-        { name: "Microservices Architecture", level: 80 },
+        { name: "Microservices Architecture", level: 80 },        
         
     ],
     "Databases": [
@@ -50,9 +50,10 @@ const SKILLS: Record<string, Skill[]> = {
         { name: "Redis", level: 70 },
     ],
     "Cloud / Infrastructure": [
-        { name: "AWS (Certified Solutions Architect)", level: 85, link: 'https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/linked_in_profile' },
+        { name: "AWS Certified Solutions Architect", level: 85, link: 'https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/public_url' },
+        { name: "AWS Certified AI Practitioner", level: 90, link: 'https://www.credly.com/badges/ebc848e3-9606-4e74-bc3a-d58a2723919e/public_url' },
         { name: "AWS Lambda", level: 80 },        
-        { name: "Docker", level: 75 },
+        { name: "Docker", level: 80 },
         { name: "CI/CD", level: 90 },
         { name: "AWS Secrets Manager", level: 85 },
         { name: "AWS Cert Manager", level: 85 },

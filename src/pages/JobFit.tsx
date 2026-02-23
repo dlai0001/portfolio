@@ -12,6 +12,10 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
+const generateSessionId = (): string => {
+        return `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+    };
+
 const JobFit: React.FC = () => {
     const theme = useTheme();    
     const [textValue, setTextValue] = useState('');
@@ -32,7 +36,7 @@ const JobFit: React.FC = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ prompt: textValue }),
+                body: JSON.stringify({ prompt: textValue, sessionId: generateSessionId() }),
             });
             
             const data = await response.json();
@@ -167,7 +171,7 @@ Strong sense of ownership and drive, excellent communication, and a proactive ap
                                     {result?.split('\\n').map((line, index) => (
                                         <div key={index}>
                                             {line}
-                                            {index < result.split('\n').length - 1 && <br />}
+                                            {index < result.split('\\n').length - 1 && <br />}
                                         </div>
                                     ))}
                                 </Box>
