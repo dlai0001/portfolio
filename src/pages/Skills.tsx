@@ -49,9 +49,16 @@ const SKILLS: Record<string, Skill[]> = {
         { name: "DynamoDB", level: 80 },
         { name: "Redis", level: 70 },
     ],
-    "Cloud / Infrastructure": [
-        { name: "AWS Certified Solutions Architect", level: 85, link: 'https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/public_url' },
+    "AI": [
+        { name: "AWS Certified Generative AI Developer Professional", level: 90, link: 'https://www.credly.com/badges/11faf46e-652b-4015-879e-94f7a5f7462d/public_url' },
         { name: "AWS Certified AI Practitioner", level: 90, link: 'https://www.credly.com/badges/ebc848e3-9606-4e74-bc3a-d58a2723919e/public_url' },
+        { name: "AWS Bedrock", level: 75 },
+        { name: "RAG", level: 80 },
+        { name: "Claude Code", level: 60, link: 'https://verify.skilljar.com/c/6qhzcia9497v' },
+        { name: "Spec Driven Development", level: 80 },
+    ],
+    "Cloud / Infrastructure": [
+        { name: "AWS Certified Solutions Architect", level: 85, link: 'https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/public_url' },        
         { name: "AWS Lambda", level: 80 },        
         { name: "Docker", level: 80 },
         { name: "CI/CD", level: 90 },

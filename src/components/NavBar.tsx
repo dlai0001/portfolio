@@ -30,6 +30,7 @@ export default function NavBar({ mode, toggleTheme }: Props) {
     const items: Array<[string, string]> = [
         ['/', 'Home'],
         ['/experience', 'Experience'],
+        ['/projects', 'Portfolio'],
         ['/skills', 'Skills'],
         ['/jobfit', 'Job Fit'],
     ];

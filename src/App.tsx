@@ -5,6 +5,8 @@ import NotFound from './pages/NotFound'
 import Skills from './pages/Skills'
 import Experience from './pages/Experience'
 import JobFit from './pages/JobFit'
+import Portfolio from './pages/Portfolio'
+import Architecture from './pages/Architecture'
 import { useAppTheme } from './hooks/useTheme'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import NavBar from './components/NavBar'
@@ -34,6 +36,8 @@ function App() {
           <Route path="/index.html" element={<Home />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/experience" element={<Experience />} />
+          <Route path="/projects" element={<Portfolio />} />
+          <Route path="/projects/:slug" element={<Architecture />} />
           <Route path="/jobfit" element={<JobFit />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

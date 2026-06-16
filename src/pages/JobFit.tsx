@@ -33,8 +33,7 @@ const JobFit: React.FC = () => {
             }
 
             const captchaToken = (await getCaptchaToken() as unknown as string);
-
-            // Replace with your actual API endpoint
+            
             const response = await fetch('https://f57q3gtd4n45u5gwrxtavee6au0pmpjo.lambda-url.us-east-1.on.aws/', {
                 method: 'POST',
                 headers: {
@@ -48,6 +47,9 @@ const JobFit: React.FC = () => {
             });
             
             const data = await response.json();
+            if(response.status !== 200) {
+                throw new Error(data.error || 'Failed to get a valid response from the server');
+            }
             const resultText = typeof data.result === 'string' ? data.response : JSON.stringify(data.response, null, 2);
             // clean up excessive newlines
             const resultTextCleaned = resultText.replace(/(\n\s*){3,}/g, '\n\n');
