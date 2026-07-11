@@ -18,11 +18,22 @@ type Experience = {
 
 const experiences: Experience[] = [
     {
+        id: "0",
+        company: "Solomon Page / Voya Financial",
+        role: "Lead Fullstack Engineer",
+        startDate: "March 2026",
+        endDate: "Present",
+        technologies: "Angular, Spring-Boot",
+        responsibilities: [
+            "Full-stack development with Angular and Spring-Boot"
+        ]
+    },
+    {
         id: "1",
         company: "Capital One",
         role: "Principal Engineer",
         startDate: "Jan 2023",
-        endDate: "Present",
+        endDate: "March 2026",
         technologies: "Front-end: Angular | Back-end: Spring-Boot, AWS Lambda, DynamoDB",
         responsibilities: [
             "Spec designs, implementation, and infrastructure (AWS)",
@@ -116,7 +127,7 @@ const experiences: Experience[] = [
         ]
     },
     {
-        id: "6",
+        id: "7",
         company: "+15 years of prior experience",
         role: "Software Development Engineer in Test (SDET)",
         startDate: "available upon request",

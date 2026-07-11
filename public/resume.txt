@@ -1,18 +1,31 @@
-10+ years building high-scale web platforms, leading front-end architecture, and designing GraphQL and service-oriented solutions. Experience driving technical strategy, modernizing legacy systems, mentoring engineers, and partnering with product/security stakeholders across organizations. Strong breadth across React/Angular, Node, GraphQL, AWS, and distributed system design.
+David Lai
+david@dlaisoft.com
+Lead Fullstack Engineer | AWS Cloud Architect | Agentic AI
+https://www.linkedin.com/pub/david-lai/0/11/372 | https://dlai0001.github.io/portfolio
+
+7+ years experience building, testing, scaling, and supporting high performance web applications, looking to transition to Agentic AI development. I bring solid years of experience in full stack software development and solid understanding of Agentic AI application on the AWS Bedrock platform.
+
 Skills:
-Frontend: React, React Native, Angular, Material UI, TypeScript, D3, Apollo Client, 
-Backend / APIs: Node.js, ExpressJS, Apollo GraphQL, Python/Django, Java/Spring Boot, REST API design, Microservices Architecture, AWS Bedrock, AWS Sagemaker
-Cloud / Infrastructure: AWS (Certified Solutions Architect Associate), AWS Certified AI Practitioner, AWS Lambda, DynamoDB, Docker, CI/CD, AWS Secrets Manager, AWS Cert Manager, Open Telemetry, ELK Stack, Splunk, New Relic, Load Testing, JMeter, Locust.io, AWS S3
-Programming Languages: JavaScript/TypeScript, Python, Java, C#, SQL
+Programming Languages: JavaScript / TypeScript, Python, Java, C#, SQL
+Frontend: React, React Native, Angular, Material UI, TypeScript, D3, Apollo Client, NextJS, Cypress, Selenium
+Backend / APIs: Node.js, ExpressJS, Apollo GraphQL, Python/Django, Java/Spring Boot, REST API design, Microservices Architecture, Postgres, MySQL, DynamoDB, AWS Lambda, API Gateway, S3, Cloudfront, Redis, ElasticSearch, MongoDB
+Cloud / Infrastructure: AWS (Certified Solutions Architect Associate), Docker, CI/CD, AWS Secrets Manager, AWS Cert Manager, Open Telemetry (OTEL), ELK Stack, Splunk, New Relic, Load Testing, JMeter, Locust.io, AWS S3
+AI: AWS Certified Generative AI Developer Professional, AWS Certified AI Practitioner, Claude Code in Motion Certified Developer, AWS Bedrock, Prompt Engineering, RAG, Data pipelines, Github Copilot, Claude Code, Windsurf
 Best Practices: GraphQL Schema Design, Cloud Architecture, Domain Driven Design (DDD), Automated Testing, Debugging (JS/Node), RFCs/Tech Specs, System Design and Architecture, Stakeholder leadership, UML Architecture, AWS Well Architected Framework, EVA Architecture, Web Performance, Front-end Architecture, Load and Performance Testing
+
 Professional Work Experience:
-Capital One: Principal Engineer              			Jan 2023 - Present
+Solomon Page / Voya Financial: Lead Fullstack Engineer              March 2026 - Present
+Angular
+Spring-Boot
+
+Capital One: Principal Engineer              Jan 2023 - March 2026
 Front-end : Angular
 Back-end : Spring-Boot, AWS Lambda, DynamoDB
 Responsibilities:  Spec designs, implementation, Infrastructure (AWS), Onboarding new lines of businesses to using our home grown identity solutions.
 Work with security researchers to implement the latest cybersecurity measures.
 Mentor Jr. Engineers and Interns.
 Notable projects:  App migration to AWS Secrets Manager, Redesign of Case Details Page, Migration to using AWS Cert Manager, Worked with notable external partners to onboard identity solutions.
+
 PlayVs: Front End Lead / GraphQL developer                         Sept 2020 - Oct 2022
 Lead front end architecture and development, designing and maintaining the GraphQL schema, and backend development.  (80%/20% FE/BE dev ratio)
 Writing RFCs and Tech Specs setting up best practices and future direction of our technology.
@@ -33,12 +46,14 @@ Worked with member management and accounting to maintain and develop new feature
 Migrated legacy systems in AngularJS and NodeJS to Python/Django and React.
 Developed and supported e-commerce and flight booking APIs.
 Mentor Jr. Engineers and perform code reviews.
+
 Breeze Orthodontics: General Manager			       July 2017 - July 2018
 HR, Operations Manager, Logistics, Training, Sales & Marketing, IT, 3D Smile Design
 Online marketing - Hubspot, Google Analytics, Adwords, Website Design
 Turned around a dental practice losing -$40k/year to generating over $300k income/yr
 Implemented 3D printing and 3D smile design process
 Hire, train, and manage both office and chair side staff.
+
 Shippabo: Full-stack Developer					       Feb  2017 - July 2017
 MEAN Stack - Mongo Express AngularJS NodeJS
 Developed real time chat collaboration feature using SocketIO and AngularJS
@@ -47,6 +62,7 @@ Generated PDF documents using headless browser and CSS.
 Backend ecom integrations with accounting system Xero
 
 15+ years of SDET Experience prior to switching careers to web development.
+Skills: Load testing, test automation, test framework design, security testing, issue RCA analysis, test planning.
 (Available upon request)
 
 Education:
@@ -56,8 +72,12 @@ Bachelor of Science, Computer Science - UC Santa Barbara, 2003
 
 Product Management Intensive Course - General Assembly, 2013
 
+Certifications:
+AWS Certified Generative AI Developer Professional 2026 - https://www.credly.com/badges/11faf46e-652b-4015-879e-94f7a5f7462d
 AWS Certified Solutions Architect Associate 2023 - https://www.credly.com/badges/1741d3ee-5735-4d77-885d-6f9f15863fa1/public_url
-AWS Certified AI Practitioner 2026 - https://www.credly.com/badges/ebc848e3-9606-4e74-bc3a-d58a2723919e/public_url 
+AWS Certified AI Practitioner 2026 - https://www.credly.com/badges/ebc848e3-9606-4e74-bc3a-d58a2723919e/public_url
+Cloud Code in Action 2026 - https://verify.skilljar.com/c/6qhzcia9497v
+
 Awards & Honors
 1st Place, Techweek LA hackathon						          Nov 1-2, 2014
 Created a responsive mobile web app that help people adopt dogs via a Tinder-like interface.

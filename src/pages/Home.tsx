@@ -69,7 +69,7 @@ const Home: React.FC = () => {
                                 David Lai
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                                Fullstack Web Developer · AWS Cloud Architect · GraphQL Expert
+                                Lead Fullstack Engineer · AWS Cloud Architect · Agentic AI
                             </Typography>
                         </Stack>
                     </Stack>
@@ -79,8 +79,9 @@ const Home: React.FC = () => {
                         variant="body1"
                         sx={{ my: 2.5, lineHeight: 1.6 }}
                     >
-                        I build reliable, accessible web applications with a focus on performance and delightful UX.
-                        Experienced in web application architecture, component design, and end-to-end delivery for SaaS products.
+                        7+ years building, testing, scaling, and supporting high-performance web applications, now
+                        focused on Agentic AI development. I bring deep full-stack engineering experience alongside a
+                        strong foundation in building Agentic AI applications on the AWS Bedrock platform.
                     </Typography>
 
                     {/* Action Buttons */}
