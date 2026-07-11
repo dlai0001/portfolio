@@ -324,6 +324,88 @@ export const PROJECTS: Project[] = [
             ],
         },
     },
+    {
+        slug: 'freepost',
+        name: 'Freepost',
+        tagline: 'The API client that never phones home',
+        description:
+            'Freepost is an open-source, offline-first Postman alternative for REST, GraphQL, and WebSocket testing — built for developers behind corporate firewalls. No account, no cloud, no telemetry: collections are runnable curl files on disk.',
+        image: asset('projects/freepost.png'),
+        imageFit: 'contain', // wide hero poster — show it whole so the headline & URL aren't cropped
+        downloadLink: { label: 'GitHub', href: 'https://github.com/dlai0001/freepost' },
+        marketingLink: { label: 'Website', href: 'https://dlai0001.github.io/freepost/' },
+        tech: ['Electron', 'React · TypeScript', 'REST / GraphQL / WebSocket', 'curl-on-disk', 'Offline-only'],
+        architecture: {
+            summary:
+                'A cross-platform desktop API client built on Electron. Collections are plain folders on disk, where every request is a pretty-printed, runnable curl command (websocat for WebSocket) with YAML-in-comments frontmatter. The request engine is the only module allowed to open a socket, and CI enforces a zero-network fence so the app never phones home.',
+            techStack: [
+                'Electron — cross-platform desktop shell',
+                'React + TypeScript — renderer UI',
+                'CodeMirror 6 — request/script editing',
+                'Node request engine — REST, GraphQL (graphql-ws / graphql-sse), WebSocket (ws)',
+                'pm.* script sandbox with Chai assertions',
+                'curl / websocat on-disk collection format (YAML frontmatter)',
+                'Vitest — 400+ tests; CI network fence',
+                'Builds from source on macOS & Windows',
+            ],
+            diagram: `flowchart TD
+    subgraph Desktop["Freepost — Electron App"]
+      UI["Renderer (React + TS)<br/>request builder · editors"]
+      Scripts["pm.* script sandbox<br/>pre-request · tests (Chai)"]
+      Engine["Request engine<br/>the only module allowed a socket"]
+      Files[("Collections on disk<br/>runnable curl / websocat files")]
+    end
+    Target["Your APIs<br/>REST · GraphQL · WebSocket"]
+    Git["Git<br/>plain-text diff & review"]
+    UI --> Scripts
+    Scripts --> Engine
+    UI <-->|"read / write"| Files
+    Files -.->|"version control"| Git
+    Engine -->|"the requests you send"| Target
+    Target -->|"responses"| Engine`,
+            sections: [
+                {
+                    heading: 'Overview',
+                    body: 'Freepost is a Postman clone stripped of the team-cloud features: offline-only, no registration, and buildable from source on Windows and macOS with Node as the only prerequisite. It targets developers on locked-down corporate networks who cannot use a cloud API client.',
+                },
+                {
+                    heading: 'Curl-on-disk collection format',
+                    bullets: [
+                        'Collections are folders you choose anywhere on disk',
+                        'Every request is a pretty-printed, runnable curl command (websocat for WebSocket)',
+                        'Metadata lives in YAML-in-comments frontmatter',
+                        'bash runs it, git diff reviews it, any tool that imports curl understands it',
+                    ],
+                },
+                {
+                    heading: 'Protocols & scripting',
+                    bullets: [
+                        'REST/HTTP, GraphQL (query editor + schema introspection), and WebSocket',
+                        'Postman-compatible pre-request and test scripts via the pm.* API with Chai assertions',
+                        'Three-tier variables plus session scope, {{variable}} templating',
+                        'Workflows: ordered request runs with expect-error steps and reference validation',
+                    ],
+                },
+                {
+                    heading: 'Interop',
+                    bullets: [
+                        'Import from Postman collection v2.1, OpenAPI 3.x / Swagger 2.0, and curl / websocat / wscat',
+                        'Code generation to 8 language targets',
+                        'OAuth2 token acquisition (client_credentials, password) and mTLS client certs',
+                        'Request history and saved response examples',
+                    ],
+                },
+                {
+                    heading: 'Zero-network fence',
+                    body: 'Freepost makes zero network calls except the requests you send — no telemetry, crash reporting, or update checks. The request engine is architecturally isolated as the only module permitted to open a socket, and a CI check (npm run fence) fails the build if any other module does. This is the core trust guarantee for a tool aimed at security-conscious, firewalled environments.',
+                },
+                {
+                    heading: 'Design Decisions & Trade-offs',
+                    body: 'Git is the collaboration story instead of a cloud sync backend: because collections are plain-text curl files on disk, they are reviewed via pull requests like any other code, which sidesteps building accounts, workspaces, and server infrastructure. The trade-off is no built-in real-time team features. The project is MIT-licensed and funded by donations rather than a paid cloud tier — a deliberate choice so there is never a commercial incentive to add the phone-home behavior the tool exists to avoid.',
+                },
+            ],
+        },
+    },
 ];
 
 export const getProject = (slug: string): Project | undefined =>
