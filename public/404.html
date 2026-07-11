@@ -4,21 +4,25 @@
     <meta charset="utf-8" />
     <title>Redirecting…</title>
 
-    <!-- Immediate redirect -->
-    <meta http-equiv="refresh" content="0; url=./" />
-
-    <!-- Fallback for JS-enabled browsers -->
+    <!--
+      GitHub Pages serves this file for any path it can't find (e.g. deep links
+      like /portfolio/projects/learn-chinese-news visited directly).
+      Encode the requested path into a `?p=` query param and redirect to the
+      app root. index.html reads `p` and restores the real URL via
+      history.replaceState before React Router mounts.
+    -->
     <script>
-      window.location.replace("./");
+      (function () {
+        var l = window.location;
+        var path = l.pathname + l.search + l.hash;
+        l.replace('/portfolio/?p=' + encodeURIComponent(path));
+      })();
     </script>
 
-    <!-- Optional: prevent indexing of this page -->
+    <!-- Prevent indexing of this redirect page -->
     <meta name="robots" content="noindex" />
   </head>
   <body>
-    <p>
-      Redirecting to
-      <a href="https://dlai0001.github.io/portfolio/">https://dlai0001.github.io/portfolio/</a>…
-    </p>
+    <p>Redirecting…</p>
   </body>
 </html>
