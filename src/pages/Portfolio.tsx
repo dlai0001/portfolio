@@ -101,19 +101,23 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
                 spacing={1}
                 sx={{ mt: 'auto', flexWrap: 'wrap', gap: 1 }}
             >
-                {project.downloadLink && (
+                {[
+                    ...(project.downloadLink ? [project.downloadLink] : []),
+                    ...(project.downloadLinks ?? []),
+                ].map((link) => (
                     <Button
+                        key={link.href}
                         component="a"
-                        href={project.downloadLink.href}
+                        href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
                         variant="contained"
                         size="small"
                         startIcon={<DownloadIcon />}
                     >
-                        {project.downloadLink.label}
+                        {link.label}
                     </Button>
-                )}
+                ))}
                 {project.marketingLink && (
                     <Button
                         component="a"

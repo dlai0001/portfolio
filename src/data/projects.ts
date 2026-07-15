@@ -32,6 +32,11 @@ export type Project = {
     imagePosition?: string;
     /** Primary "Download" call to action (App Store / Play Store / release page). */
     downloadLink?: ProjectLink;
+    /**
+     * Multiple download CTAs — use when a single entry ships more than one app
+     * (e.g. a family of apps). Rendered in addition to / instead of `downloadLink`.
+     */
+    downloadLinks?: ProjectLink[];
     /** Marketing / landing site. */
     marketingLink?: ProjectLink;
     /** Tech tags rendered as chips on the card. */
@@ -147,24 +152,27 @@ export const PROJECTS: Project[] = [
     },
     {
         slug: 'az-104-study-guide',
-        name: 'AZ-104 Study Guide',
-        tagline: 'Microsoft Azure Administrator exam prep',
+        name: 'Study Guides (AZ-104, CCA-F)',
+        tagline: 'Certification exam prep — Azure & Claude',
         description:
-            'A study companion for the Microsoft AZ-104 (Azure Administrator) certification — concise topic summaries, practice questions, and progress tracking to help candidates prepare efficiently.',
+            'A family of native iOS certification-study apps built on one shared architecture — the Microsoft AZ-104 (Azure Administrator) and CCA-F (Certified Claude Architect – Foundational) guides. Each offers on-device practice quizzes plus AI-driven study recommendations grounded in the official documentation.',
         image: asset('projects/az-104-study-guide.png'),
         imageFit: 'contain', // app icon, not a screenshot — show it whole
-        downloadLink: { label: 'App Store', href: 'https://apps.apple.com/us/app/az-104-azure-admin-study-guide/id6764186666' },
+        downloadLinks: [
+            { label: 'AZ-104 · App Store', href: 'https://apps.apple.com/us/app/az-104-azure-admin-study-guide/id6764186666' },
+            { label: 'CCA-F · App Store', href: 'https://apps.apple.com/us/app/cca-f-architect-study/id6788189859' },
+        ],
         marketingLink: { label: 'Marketing Site', href: 'https://studyguides.dlaisoft.com' },
         tech: ['iOS · Native', 'AWS Bedrock', 'RAG', 'AWS Lambda'],
         architecture: {
             summary:
-                'A native iOS Azure-administrator study app. Quiz questions live on-device and are refreshed by a weekly Claude routine that ships app updates. AWS Lambda + Bedrock power an AI study guide that recommends articles and videos based on your missed domains, plus an in-quiz AI chat — both grounded by RAG over an S3 vector store of indexed Microsoft Azure documentation, with a Bedrock guardrail protecting the chat.',
+                'A family of native iOS certification-study apps — AZ-104 (Microsoft Azure Administrator) and CCA-F (Certified Claude Architect – Foundational) — sharing one architecture. Quiz questions live on-device and are refreshed by a weekly Claude routine that ships app updates. AWS Lambda + Bedrock power an AI study guide that recommends articles and videos based on your missed domains, plus an in-quiz AI chat — both grounded by RAG over an S3 vector store of the indexed certification documentation, with a Bedrock guardrail protecting the chat.',
             techStack: [
-                'Native iOS app',
+                'Native iOS apps (AZ-104, CCA-F) on a shared architecture',
                 'Quiz questions stored on-device',
                 'Weekly Claude routine generates new questions, shipped via app update',
                 'AWS Lambda API + AWS Bedrock (LLM)',
-                'RAG over an S3 vector store of indexed Microsoft Azure docs',
+                'RAG over an S3 vector store of indexed certification docs',
                 'AWS Bedrock Guardrail on the AI chat',
             ],
             diagram: `flowchart TD
@@ -178,7 +186,7 @@ export const PROJECTS: Project[] = [
       Lambda["AWS Lambda<br/>API"]
       Bedrock["AWS Bedrock<br/>LLM"]
       Guard["Bedrock Guardrail<br/>anti-jailbreak / abuse"]
-      Vec[("S3 Vector Store<br/>RAG · indexed Azure docs")]
+      Vec[("S3 Vector Store<br/>RAG · indexed cert docs")]
     end
     Routine -->|"ships app update"| Quiz
     Guide -->|"missed-question domains"| Lambda
@@ -190,12 +198,12 @@ export const PROJECTS: Project[] = [
             sections: [
                 {
                     heading: 'Overview',
-                    body: 'A native iOS study app for the Microsoft AZ-104 (Azure Administrator) certification, combining on-device practice quizzes with AI-driven study recommendations and an in-quiz AI chat.',
+                    body: 'A family of native iOS study apps — AZ-104 (Microsoft Azure Administrator) and CCA-F (Certified Claude Architect – Foundational) — built on one shared architecture that combines on-device practice quizzes with AI-driven study recommendations and an in-quiz AI chat.',
                 },
                 {
-                    heading: 'iOS App (on-device)',
+                    heading: 'iOS Apps (on-device)',
                     bullets: [
-                        'Native iOS app',
+                        'Native iOS apps: AZ-104 and CCA-F',
                         'Quiz questions are stored on the device',
                     ],
                 },
@@ -224,12 +232,12 @@ export const PROJECTS: Project[] = [
                     heading: 'Retrieval (RAG)',
                     bullets: [
                         'Both AI features use AWS Lambda + Bedrock',
-                        'RAG is backed by an S3 vector store built from indexing official Microsoft Azure documentation',
+                        'RAG is backed by an S3 vector store built from indexing each certification’s official documentation (Microsoft Azure for AZ-104, Anthropic/Claude docs for CCA-F)',
                     ],
                 },
                 {
                     heading: 'Design Decisions & Trade-offs',
-                    body: 'Shipping questions on-device keeps the quiz fast and available offline, while AI features are grounded in indexed Azure documentation so guidance stays accurate and current.',
+                    body: 'Shipping questions on-device keeps the quiz fast and available offline, while AI features are grounded in indexed certification documentation so guidance stays accurate and current. A single shared architecture lets new exam guides (AZ-104, CCA-F, and beyond) launch quickly by swapping the on-device question set and the indexed docs behind the RAG store.',
                 },
             ],
         },

@@ -54,19 +54,23 @@ const Architecture: React.FC = () => {
                     </Typography>
 
                     <Stack direction="row" spacing={1} sx={{ mt: 2, flexWrap: 'wrap', gap: 1 }}>
-                        {project.downloadLink && (
+                        {[
+                            ...(project.downloadLink ? [project.downloadLink] : []),
+                            ...(project.downloadLinks ?? []),
+                        ].map((link) => (
                             <Button
+                                key={link.href}
                                 component="a"
-                                href={project.downloadLink.href}
+                                href={link.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 variant="contained"
                                 size="small"
                                 startIcon={<DownloadIcon />}
                             >
-                                {project.downloadLink.label}
+                                {link.label}
                             </Button>
-                        )}
+                        ))}
                         {project.marketingLink && (
                             <Button
                                 component="a"
