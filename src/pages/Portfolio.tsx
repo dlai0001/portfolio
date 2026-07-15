@@ -26,6 +26,44 @@ const CardImage: React.FC<{ project: Project }> = ({ project }) => {
     const fit = project.imageFit ?? 'cover';
     const position = project.imagePosition ?? 'center';
 
+    // A family entry with multiple icons: show each image whole, side by side,
+    // centered over the gradient banner.
+    if (project.images && project.images.length > 0) {
+        return (
+            <Box
+                aria-hidden
+                sx={{
+                    height: 160,
+                    borderRadius: 2,
+                    mb: 2,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2,
+                    p: 1.5,
+                    background: gradient,
+                }}
+            >
+                {project.images.map((src) => (
+                    <Box
+                        key={src}
+                        component="img"
+                        src={src}
+                        alt=""
+                        sx={{
+                            height: '100%',
+                            width: 'auto',
+                            maxWidth: '45%',
+                            objectFit: 'contain',
+                            borderRadius: 2,
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                        }}
+                    />
+                ))}
+            </Box>
+        );
+    }
+
     return (
         <Box
             aria-hidden

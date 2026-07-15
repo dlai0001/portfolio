@@ -23,6 +23,12 @@ export type Project = {
      */
     image?: string;
     /**
+     * Multiple card images shown side by side over the gradient banner — use for
+     * a family entry that ships more than one app (e.g. two app icons). When set,
+     * this takes precedence over `image`.
+     */
+    images?: string[];
+    /**
      * How the card image fills the banner. `cover` (default) crops to fill —
      * best for wide screenshots. `contain` shows the whole image centered over
      * the gradient — best for icons/logos and tall portrait screenshots.
@@ -157,7 +163,11 @@ export const PROJECTS: Project[] = [
         description:
             'A family of native iOS certification-study apps built on one shared architecture — the Microsoft AZ-104 (Azure Administrator) and CCA-F (Certified Claude Architect – Foundational) guides. Each offers on-device practice quizzes plus AI-driven study recommendations grounded in the official documentation.',
         image: asset('projects/az-104-study-guide.png'),
-        imageFit: 'contain', // app icon, not a screenshot — show it whole
+        images: [
+            asset('projects/az-104-study-guide.png'),
+            asset('projects/cca-f-architect-study.png'),
+        ],
+        imageFit: 'contain', // app icons, not screenshots — show them whole
         downloadLinks: [
             { label: 'AZ-104 · App Store', href: 'https://apps.apple.com/us/app/az-104-azure-admin-study-guide/id6764186666' },
             { label: 'CCA-F · App Store', href: 'https://apps.apple.com/us/app/cca-f-architect-study/id6788189859' },
