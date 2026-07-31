@@ -257,17 +257,20 @@ export const PROJECTS: Project[] = [
         name: 'Learn Chinese News',
         tagline: 'Study Mandarin with real news articles',
         description:
-            'Learn Chinese News is an iPhone app for studying Mandarin with real news articles: bilingual side-by-side reading, pinyin, read-aloud, and vocabulary study.',
+            'Learn Chinese News is an iOS and Android app for studying Mandarin with real news articles: bilingual side-by-side reading, pinyin, read-aloud, and vocabulary study.',
         image: asset('projects/learn-chinese-news.png'),
         imageFit: 'contain', // app icon, not a screenshot — show it whole
-        downloadLink: { label: 'App Store', href: 'https://apps.apple.com/us/app/learn-chinese-news/id6778641133' },
+        downloadLinks: [
+            { label: 'App Store', href: 'https://apps.apple.com/us/app/learn-chinese-news/id6778641133' },
+            { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.dlaisoft.learnchinese' },
+        ],
         marketingLink: { label: 'Marketing Site', href: 'https://learnchinese.dlaisoft.com/' },
-        tech: ['iOS · Native', 'Mandarin / news', 'Pinyin', 'Read-aloud (TTS)'],
+        tech: ['iOS & Android', 'Mandarin / news', 'Pinyin', 'Read-aloud (TTS)'],
         architecture: {
             summary:
-                'A native iOS app that fetches real Mandarin news articles, then translates the headlines and article text via AWS Lambda + AWS Bedrock, presenting bilingual side-by-side reading with pinyin, read-aloud, and vocabulary study.',
+                'A mobile app for iOS and Android that fetches real Mandarin news articles, then translates the headlines and article text via AWS Lambda + AWS Bedrock, presenting bilingual side-by-side reading with pinyin, read-aloud, and vocabulary study.',
             techStack: [
-                'Native iOS app',
+                'Mobile app — iOS & Android',
                 'In-app news fetching',
                 'AWS Lambda — API entry point',
                 'AWS Bedrock — headline & article translation',
@@ -278,7 +281,7 @@ export const PROJECTS: Project[] = [
             diagram: `flowchart TD
     News["News sources<br/>Mandarin articles"]
     Ads["Google AdMob<br/>ad serving"]
-    subgraph Device["iOS App"]
+    subgraph Device["Mobile App (iOS & Android)"]
       Fetch["Fetch news"]
       Reader["Bilingual reader<br/>side-by-side · pinyin"]
       TTS["Read-aloud<br/>sentence highlighting"]
@@ -305,9 +308,9 @@ export const PROJECTS: Project[] = [
                     body: 'Learn Chinese News helps learners study Mandarin using authentic news articles, pairing the original Chinese with an English translation and adding pinyin, read-aloud, and vocabulary tools.',
                 },
                 {
-                    heading: 'News & iOS App',
+                    heading: 'News & Mobile App',
                     bullets: [
-                        'Native iOS app',
+                        'Mobile app for iOS and Android',
                         'The app fetches news articles directly',
                     ],
                 },
