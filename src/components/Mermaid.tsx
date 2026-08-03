@@ -3,6 +3,8 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { isStaleChunkError, markChunkLoadSucceeded, recoverFromStaleChunk } from '../libs/stale-chunk-helper';
+
 type Props = {
     /** Mermaid diagram source, e.g. a `flowchart TD ...` string. */
     chart: string;
@@ -29,6 +31,7 @@ export default function Mermaid({ chart }: Props): React.ReactElement {
         (async () => {
             try {
                 const { default: mermaid } = await import('mermaid');
+                markChunkLoadSucceeded();
                 if (cancelled) return;
 
                 mermaid.initialize({
@@ -44,6 +47,10 @@ export default function Mermaid({ chart }: Props): React.ReactElement {
                 setError(null);
             } catch (err: unknown) {
                 if (cancelled) return;
+                // A missing mermaid chunk means this tab is running a previous
+                // deploy; reload onto the current build instead of blaming the
+                // diagram source.
+                if (recoverFromStaleChunk(err)) return;
                 setError(err instanceof Error ? err.message : String(err));
             }
         })();
@@ -52,6 +59,17 @@ export default function Mermaid({ chart }: Props): React.ReactElement {
             cancelled = true;
         };
     }, [chart, renderId, theme.palette.mode, theme.typography.fontFamily]);
+
+    // A load failure that survived the reload isn't a problem with the source,
+    // so show a refresh prompt rather than a syntax-error dump.
+    if (error && isStaleChunkError(error)) {
+        return (
+            <Typography variant="body2" color="text.secondary">
+                The diagram couldn&apos;t be loaded. Refresh the page to pick up the latest version
+                of the site.
+            </Typography>
+        );
+    }
 
     if (error) {
         return (
