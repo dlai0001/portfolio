@@ -12,8 +12,8 @@ import Switch from '@mui/material/Switch';
 import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 
 type Props = {
     mode: 'light' | 'dark';

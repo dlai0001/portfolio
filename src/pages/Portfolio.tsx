@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import ArchitectureIcon from '@mui/icons-material/AccountTree';
 import DownloadIcon from '@mui/icons-material/Download';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import React from 'react';
 
 import { PROJECTS, type Project } from '../data/projects';

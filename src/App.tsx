@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Skills from './pages/Skills'
