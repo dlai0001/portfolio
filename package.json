@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://dlai0001.github.io/portfolio",
   "engines": {
-    "node": ">=22.12"
+    "node": ">=22.13"
   },
   "scripts": {
     "dev": "vite",
