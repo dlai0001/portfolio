@@ -427,6 +427,107 @@ export const PROJECTS: Project[] = [
             ],
         },
     },
+    {
+        slug: 'ux-developer-companion',
+        name: 'UX Developer Companion',
+        tagline: 'Point at the bug. Press one key. Let Copilot see what you see.',
+        description:
+            'A VS Code extension that embeds a real browser inside the editor. Annotate a UI bug directly on the page, then send the screenshot plus full page context to Copilot Chat with one keystroke — no more describing defects in prose.',
+        image: asset('projects/ux-developer-companion.png'),
+        imageFit: 'contain', // extension icon, not a screenshot — show it whole
+        downloadLink: {
+            label: 'VS Code Marketplace',
+            href: 'https://marketplace.visualstudio.com/items?itemName=dlaisoft.ux-developer-companion',
+        },
+        tech: ['VS Code Extension', 'TypeScript', 'Chrome DevTools Protocol', 'GitHub Copilot Chat', 'axe-core'],
+        architecture: {
+            summary:
+                'A VS Code extension that drives a headless Edge/Chrome instance over the Chrome DevTools Protocol and streams it into an editor panel. An annotation layer anchored to page CSS pixels lets you mark up a defect in place; the marked-up screenshot is then bundled with page context (URL, route, viewport, emulation state) and handed to GitHub Copilot Chat in a single keystroke. The same CDP session powers the component inspector, responsive tooling, accessibility scanning, and state manipulation.',
+            techStack: [
+                'VS Code extension (TypeScript) — webview panel UI',
+                'Chrome DevTools Protocol client — drives headless Edge/Chrome',
+                'Streamed browser frames with mouse, keyboard, and wheel input',
+                'Canvas annotation layer anchored to page CSS pixels',
+                'GitHub Copilot Chat integration — screenshot + context attachment',
+                'React & Angular component inspection (dev builds for Angular)',
+                'axe-core — bundled WCAG 2.1 accessibility scanning',
+                'CDP emulation & network domains — device presets, throttling, request interception',
+                'MIT licensed',
+            ],
+            diagram: `flowchart TD
+    subgraph VSCode["VS Code"]
+      Panel["Embedded browser panel<br/>streamed frames · mouse · keyboard"]
+      Annot["Annotation layer<br/>box · circle · arrow · text · callout"]
+      Inspect["Component inspector<br/>React / Angular props & state"]
+      Lab["State Lab<br/>pseudo-states · throttling · storage"]
+      A11y["Color & accessibility<br/>eyedropper · WCAG · axe-core"]
+      Copilot["GitHub Copilot Chat"]
+    end
+    CDP["Chrome DevTools Protocol"]
+    Browser["Headless Edge / Chrome"]
+    App["Your app under development<br/>localhost / dev server"]
+    Panel <-->|"input & frames"| CDP
+    Inspect --> CDP
+    Lab --> CDP
+    A11y --> CDP
+    CDP <--> Browser
+    Browser -->|"renders"| App
+    Panel --> Annot
+    Annot -->|"annotated screenshot +<br/>URL · route · viewport · emulation"| Copilot`,
+            sections: [
+                {
+                    heading: 'Overview',
+                    body: 'UX Developer Companion collapses the loop of reporting a UI defect. Instead of switching to a browser, screenshotting, cropping, pasting, and writing a paragraph explaining what is wrong, you point at the problem in an embedded browser, annotate it, and press one key — Copilot Chat receives the annotated image along with everything it needs to know about the page state.',
+                },
+                {
+                    heading: 'Embedded Browser',
+                    bullets: [
+                        'Headless Edge/Chrome driven over the Chrome DevTools Protocol',
+                        'Frames streamed into a VS Code panel with full mouse, keyboard, and wheel support',
+                        'Never leave the editor to reproduce or inspect a UI issue',
+                    ],
+                },
+                {
+                    heading: 'Annotation & Send to Chat',
+                    bullets: [
+                        'Box, circle, arrow, text, and callout markups anchored to page CSS pixels',
+                        'One-keystroke attachment of the screenshot to GitHub Copilot Chat',
+                        'Context travels with the image: URL, route, viewport, and emulation state',
+                        'Copilot integration is optional — every other feature works standalone',
+                    ],
+                },
+                {
+                    heading: 'Component Inspector',
+                    bullets: [
+                        'Live prop and state editing for React and Angular components',
+                        'Click-to-pick navigation from the rendered page to the component',
+                        'Angular inspection requires a development build',
+                    ],
+                },
+                {
+                    heading: 'Responsive & Accessibility Tooling',
+                    bullets: [
+                        'Device presets and a breakpoint slider derived from the app’s own media queries',
+                        'Responsive matrix for viewing several viewports at once',
+                        'Eyedropper that identifies the CSS custom property behind a color',
+                        'WCAG 2.1 contrast checks and bundled axe-core scanning',
+                    ],
+                },
+                {
+                    heading: 'State Lab',
+                    bullets: [
+                        'Force pseudo-states (:hover, :focus, :active) to inspect hard-to-catch styling',
+                        'Request interception and network throttling',
+                        'Storage snapshots for reproducing state-dependent bugs',
+                    ],
+                },
+                {
+                    heading: 'Design Decisions & Trade-offs',
+                    body: 'Driving a real headless browser over CDP — rather than embedding a simplified webview — means the inspector, emulation, throttling, and accessibility tooling all reuse one session and behave exactly as they do in Chrome DevTools. Anchoring annotations to page CSS pixels instead of screen coordinates keeps markup correct across zoom levels and viewport changes. The Copilot handoff is deliberately optional so the extension remains useful as a pure in-editor browser and inspection tool for developers without a Copilot subscription. The project is MIT-licensed.',
+                },
+            ],
+        },
+    },
 ];
 
 export const getProject = (slug: string): Project | undefined =>
