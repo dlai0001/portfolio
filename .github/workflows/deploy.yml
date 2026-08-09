@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Pages serves from the gh-pages branch (legacy build type), so the job needs
+# write access to push the built site there.
+permissions:
+  contents: write
+
+# Never let two deploys race; queue them instead of cancelling a push midway.
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # gh-pages fetches the existing remote branch to build its commit on.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # `build` is `tsc -b && vite build`, so a type error fails the deploy.
+      - run: npm run build
+
+      - name: Publish to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          npx gh-pages -d dist --dotfiles -m "Deploy ${GITHUB_SHA}"
