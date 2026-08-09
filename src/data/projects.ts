@@ -435,10 +435,13 @@ export const PROJECTS: Project[] = [
             'A VS Code extension that embeds a real browser inside the editor. Annotate a UI bug directly on the page, then send the screenshot plus full page context to Copilot Chat with one keystroke — no more describing defects in prose.',
         image: asset('projects/ux-developer-companion.png'),
         imageFit: 'contain', // extension icon, not a screenshot — show it whole
-        downloadLink: {
-            label: 'VS Code Marketplace',
-            href: 'https://marketplace.visualstudio.com/items?itemName=dlaisoft.ux-developer-companion',
-        },
+        downloadLinks: [
+            {
+                label: 'VS Code Marketplace',
+                href: 'https://marketplace.visualstudio.com/items?itemName=dlaisoft.ux-developer-companion',
+            },
+            { label: 'GitHub', href: 'https://github.com/dlai0001/ux-developer-companion' },
+        ],
         tech: ['VS Code Extension', 'TypeScript', 'Chrome DevTools Protocol', 'GitHub Copilot Chat', 'axe-core'],
         architecture: {
             summary:
