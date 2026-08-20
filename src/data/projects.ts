@@ -65,6 +65,150 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
 export const PROJECTS: Project[] = [
     {
+        slug: 'hexlands',
+        name: 'Hexlands',
+        tagline: 'Online tile-based multiplayer strategy game',
+        description:
+            'Hexlands is a real-time multiplayer hex-tile placement game for iOS. The whole backend is serverless — API Gateway WebSockets, Lambda handlers, and DynamoDB — with a server-authoritative game engine, in-game voice chat, an internal admin portal for moderation, and CloudWatch monitoring.',
+        image: asset('projects/hexlands.png'),
+        imageFit: 'contain', // app icon, not a screenshot — show it whole
+        downloadLink: { label: 'App Store', href: 'https://apps.apple.com/app/id6762682871' },
+        marketingLink: { label: 'Website', href: 'https://www.hexlandsgame.com/' },
+        tech: ['iOS · SwiftUI + SpriteKit', 'API Gateway WebSockets', 'AWS Lambda', 'DynamoDB', 'AWS CDK'],
+        architecture: {
+            summary:
+                'An entirely serverless multiplayer game. The iOS client holds a persistent WebSocket to an API Gateway WebSocket API; every action is validated by a server-authoritative game engine running in Lambda and persisted to DynamoDB with optimistic locking. The same pure engine is bundled to JavaScript and executed on-device so single-player behaves identically to multiplayer. A separate admin web UI handles bans and bug reports, voice clips transit S3 with a one-day lifecycle, and CloudWatch carries the alarms, logs, and traces. All infrastructure is defined in AWS CDK across dev and prod stages.',
+            techStack: [
+                'Native iOS client — SwiftUI UI with a SpriteKit hex board',
+                'Amazon API Gateway — WebSocket API (connect / disconnect / default routes)',
+                'AWS Lambda — TypeScript handlers, one module per client action',
+                'DynamoDB — games, connections, bans, bug reports, tokens, leaderboard, audit',
+                'Amazon S3 — temporary voice-clip storage (presigned PUT, 1-day expiry)',
+                'AWS Secrets Manager — HMAC key for anti-replay nonces',
+                'CloudWatch — alarms via SNS, structured JSON logs; X-Ray tracing',
+                'Admin Web UI — S3 + CloudFront SPA behind IAM Identity Center → Cognito',
+                'AWS CDK — single stack per stage (dev / prod), custom domains via Route 53',
+                'CoreML — on-device AI opponents trained offline (PPO and AlphaZero-lite)',
+            ],
+            diagram: `flowchart TD
+    subgraph Clients["Clients"]
+      iOS["iOS Game Client<br/>SwiftUI · SpriteKit"]
+      AdminUI["Admin Web UI<br/>bans · bug reports"]
+    end
+    subgraph AWS["AWS Cloud (serverless)"]
+      WS["API Gateway<br/>WebSocket API"]
+      Fns["AWS Lambda<br/>connect · disconnect · default"]
+      Engine["Game engine<br/>validator · scorer · feature detector"]
+      DDB[("DynamoDB<br/>games · connections · bans<br/>reports · leaderboard")]
+      S3V[("Amazon S3<br/>voice clips · 1-day expiry")]
+      Sec["Secrets Manager<br/>anti-replay HMAC key"]
+      CW["CloudWatch<br/>alarms · logs · X-Ray"]
+      Auth["IAM Identity Center → Cognito<br/>SigV4 temp credentials"]
+      AdminAPI["API Gateway REST<br/>Admin API + Lambda"]
+    end
+    iOS <-->|"WebSocket actions & broadcasts"| WS
+    WS --> Fns
+    Fns --> Engine
+    Fns <-->|"optimistic-locked reads / writes"| DDB
+    Fns -->|"presigned PUT url"| S3V
+    iOS -->|"upload voice clip"| S3V
+    Sec -.->|"nonce signing"| Fns
+    Fns -.->|"logs · metrics · traces"| CW
+    AdminUI --> Auth
+    Auth --> AdminAPI
+    AdminAPI --> DDB`,
+            sections: [
+                {
+                    heading: 'Overview',
+                    body: 'Hexlands is a hex-tile placement game — players draw a tile, place it against the shared board, optionally claim a feature, and score when roads, cities, and chapels complete. It ships on the App Store for iOS and supports real-time multiplayer lobbies, an offline single-player mode with AI opponents, and a persistent world board that never ends.',
+                },
+                {
+                    heading: 'iOS Game Client',
+                    bullets: [
+                        'SwiftUI for navigation, lobby, and overlays; SpriteKit for the hex board and tile art',
+                        'Tile artwork is drawn procedurally and cached per definition, with deterministic seeded scatter',
+                        'A single WebSocket client feeds a central game store that drives every view',
+                        'Universal links for share-to-join invites; replays render to a shareable MP4',
+                    ],
+                },
+                {
+                    heading: 'Realtime Backend (WebSockets)',
+                    bullets: [
+                        'API Gateway WebSocket API with connect, disconnect, and default routes',
+                        'One Lambda per route; the default handler dispatches to a module per client action (place tile, place meeple, join, rejoin, chat, leaderboard, …)',
+                        'Server-side broadcaster fans state changes out to every connection in a game',
+                        'Reserved concurrency and per-function error, throttle, and p99-duration alarms',
+                    ],
+                },
+                {
+                    heading: 'Server-Authoritative Game Engine',
+                    bullets: [
+                        'Pure TypeScript modules — hex math, tile validator, feature detector, scorer — with no AWS dependencies',
+                        'The client never decides legality: it renders what the server says is valid',
+                        'The same engine is bundled to a single JS file and run on-device in JavaScriptCore, so single-player and multiplayer share one rule set',
+                        'A Python mirror of the engine backs offline AI training',
+                    ],
+                },
+                {
+                    heading: 'Data Model (DynamoDB)',
+                    bullets: [
+                        'Pay-per-request tables for games, connections, bans, bug reports, player tokens, leaderboard, admin audit, and recorded training games',
+                        'Every game write is guarded by a version condition expression — concurrent actions fail closed rather than corrupting the board',
+                        'TTL expires finished games and stale connections automatically',
+                        'The weekly leaderboard partitions on an ISO week id derived at write time, so it resets with no cron job',
+                        'The persistent world board is split into chunk rows under one partition, keeping every item well under the 400 KB limit',
+                    ],
+                },
+                {
+                    heading: 'Voice & Chat',
+                    bullets: [
+                        'The client requests a short-lived presigned S3 PUT URL, uploads the clip, then notifies the game so peers can play it',
+                        'A one-day S3 lifecycle rule expires every clip — voice is transient by design',
+                        'Text chat is a curated quick-chat phrase set validated server-side against an allowlist, plus a profanity filter on free-form names',
+                    ],
+                },
+                {
+                    heading: 'Admin Web UI',
+                    bullets: [
+                        'Static SPA on S3 + CloudFront for triaging bug reports, reviewing player reports, and issuing or lifting bans',
+                        'Sign-in flows IAM Identity Center → Cognito user pool (SAML) → identity pool → temporary AWS credentials',
+                        'Calls a SigV4-signed, IAM-authorized REST API; no long-lived admin keys exist in the browser',
+                        'Every mutating admin action is written to an audit table; the game Lambda has read-only access to bans',
+                    ],
+                },
+                {
+                    heading: 'Integrity & Anti-Cheat',
+                    bullets: [
+                        'Every mutating action carries an HMAC-SHA256 nonce; the server validates it and issues a fresh one in the response, so captured frames cannot be replayed',
+                        'The signing key lives in Secrets Manager and is never shipped to the client',
+                        'App Store purchase claims are verified against the Apple root CA certificate chain server-side',
+                        'Bans are enforced at create, join, and rejoin',
+                    ],
+                },
+                {
+                    heading: 'Observability',
+                    bullets: [
+                        'Alarms on Lambda errors, throttles, p99 duration against the API Gateway timeout, and DynamoDB throttles route to an SNS topic',
+                        'Structured JSON logs are queryable in Logs Insights by session, player, game, and action',
+                        'X-Ray is active on every function, with the trace id stamped into each log line',
+                    ],
+                },
+                {
+                    heading: 'AI Opponents',
+                    bullets: [
+                        'Easy and medium opponents run heuristic strategies on-device',
+                        'Harder tiers use neural models trained offline — a PPO trainer for medium/hard and an AlphaZero-lite trainer (ISMCTS self-play on SageMaker) for the top difficulty',
+                        'Models export to CoreML and ship inside the app, so single-player needs no network at all',
+                    ],
+                },
+                {
+                    heading: 'Design Decisions & Trade-offs',
+                    body: 'Serverless was chosen so idle cost is effectively zero: there is no always-on game server, and Lambda, DynamoDB on-demand, API Gateway, and S3 all bill per use, which matters for an indie title with bursty traffic. The cost is that all state must round-trip through DynamoDB rather than living in server memory, which is why optimistic locking and the anti-replay nonce carry so much weight. Extracting the rule engine as pure, dependency-free modules paid off twice — it is unit-testable without AWS, and bundling it to JavaScript let the same code power offline single-player instead of maintaining a second implementation. Voice chat deliberately stores nothing durable: clips are presigned uploads that expire in a day, which sidesteps moderation and retention obligations that a permanent voice archive would create.',
+                },
+            ],
+        },
+    },
+    {
         slug: 'mealiq',
         name: 'MealIQ',
         tagline: 'AI-powered meal logging & nutrition tracking',
