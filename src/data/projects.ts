@@ -71,7 +71,11 @@ export const PROJECTS: Project[] = [
         description:
             'Hexlands is a real-time multiplayer hex-tile placement game for iOS. The whole backend is serverless — API Gateway WebSockets, Lambda handlers, and DynamoDB — with a server-authoritative game engine, in-game voice chat, an internal admin portal for moderation, and CloudWatch monitoring.',
         image: asset('projects/hexlands.png'),
-        imageFit: 'contain', // app icon, not a screenshot — show it whole
+        images: [
+            asset('projects/hexlands.png'),
+            asset('projects/hexlands-gameplay.png'),
+        ],
+        imageFit: 'contain', // app icon + a tall gameplay shot — show both whole
         downloadLink: { label: 'App Store', href: 'https://apps.apple.com/app/id6762682871' },
         marketingLink: { label: 'Website', href: 'https://www.hexlandsgame.com/' },
         tech: ['iOS · SwiftUI + SpriteKit', 'API Gateway WebSockets', 'AWS Lambda', 'DynamoDB', 'AWS CDK'],
