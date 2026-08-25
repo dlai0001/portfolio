@@ -130,6 +130,11 @@ const Architecture: React.FC = () => {
                                         ))}
                                     </Stack>
                                 )}
+                                {section.diagram && (
+                                    <Box sx={{ mt: 2 }}>
+                                        <Mermaid chart={section.diagram} />
+                                    </Box>
+                                )}
                             </Box>
                         ))}
                     </Stack>

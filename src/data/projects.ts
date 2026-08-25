@@ -7,6 +7,11 @@ export type ArchitectureSection = {
     heading: string;
     body?: string;
     bullets?: string[];
+    /**
+     * Optional Mermaid source rendered beneath this section, for a detail that
+     * deserves its own picture rather than more nodes on the main diagram.
+     */
+    diagram?: string;
 };
 
 export type Project = {
@@ -78,10 +83,10 @@ export const PROJECTS: Project[] = [
         imageFit: 'contain', // app icon + a tall gameplay shot — show both whole
         downloadLink: { label: 'App Store', href: 'https://apps.apple.com/app/id6762682871' },
         marketingLink: { label: 'Website', href: 'https://www.hexlandsgame.com/' },
-        tech: ['iOS · SwiftUI + SpriteKit', 'API Gateway WebSockets', 'AWS Lambda', 'DynamoDB', 'AWS CDK'],
+        tech: ['iOS · SwiftUI + SpriteKit', 'API Gateway WebSockets', 'AWS Lambda', 'DynamoDB', 'Amazon SageMaker', 'AWS CDK'],
         architecture: {
             summary:
-                'An entirely serverless multiplayer game. The iOS client holds a persistent WebSocket to an API Gateway WebSocket API; every action is validated by a server-authoritative game engine running in Lambda and persisted to DynamoDB with optimistic locking. The same pure engine is bundled to JavaScript and executed on-device so single-player behaves identically to multiplayer. A separate admin web UI handles bans and bug reports, voice clips transit S3 with a one-day lifecycle, and CloudWatch carries the alarms, logs, and traces. All infrastructure is defined in AWS CDK across dev and prod stages.',
+                'An entirely serverless multiplayer game. The iOS client holds a persistent WebSocket to an API Gateway WebSocket API; every action is validated by a server-authoritative game engine running in Lambda and persisted to DynamoDB with optimistic locking. The same pure engine is bundled to JavaScript and executed on-device so single-player behaves identically to multiplayer. A separate admin web UI handles bans and bug reports, voice clips transit S3 with a one-day lifecycle, and CloudWatch carries the alarms, logs, and traces. Games where a human beats the AI are silently collected into DynamoDB and aggregated into a DAgger-style retraining loop on SageMaker, whose CoreML output ships in the next build. All infrastructure is defined in AWS CDK across dev and prod stages.',
             techStack: [
                 'Native iOS client — SwiftUI UI with a SpriteKit hex board',
                 'Amazon API Gateway — WebSocket API (connect / disconnect / default routes)',
@@ -92,6 +97,8 @@ export const PROJECTS: Project[] = [
                 'CloudWatch — alarms via SNS, structured JSON logs; X-Ray tracing',
                 'Admin Web UI — S3 + CloudFront SPA behind IAM Identity Center → Cognito',
                 'AWS CDK — single stack per stage (dev / prod), custom domains via Route 53',
+                'Lambda Function URL — anonymous ingest of human-win training games',
+                'Amazon SageMaker — BYOC training jobs on spot GPU, checkpoints to S3',
                 'CoreML — on-device AI opponents trained offline (PPO and AlphaZero-lite)',
             ],
             diagram: `flowchart TD
@@ -109,6 +116,8 @@ export const PROJECTS: Project[] = [
       CW["CloudWatch<br/>alarms · logs · X-Ray"]
       Auth["IAM Identity Center → Cognito<br/>SigV4 temp credentials"]
       AdminAPI["API Gateway REST<br/>Admin API + Lambda"]
+      TFn["Lambda Function URL<br/>record training game"]
+      TG[("DynamoDB<br/>training games · 90-day TTL")]
     end
     iOS <-->|"WebSocket actions & broadcasts"| WS
     WS --> Fns
@@ -120,7 +129,9 @@ export const PROJECTS: Project[] = [
     Fns -.->|"logs · metrics · traces"| CW
     AdminUI --> Auth
     Auth --> AdminAPI
-    AdminAPI --> DDB`,
+    AdminAPI --> DDB
+    iOS -->|"human beat the AI · silent upload"| TFn
+    TFn --> TG`,
             sections: [
                 {
                     heading: 'Overview',
@@ -204,6 +215,26 @@ export const PROJECTS: Project[] = [
                         'Harder tiers use neural models trained offline — a PPO trainer for medium/hard and an AlphaZero-lite trainer (ISMCTS self-play on SageMaker) for the top difficulty',
                         'Models export to CoreML and ship inside the app, so single-player needs no network at all',
                     ],
+                },
+                {
+                    heading: 'DAgger Training Loop — Learning from Human Play',
+                    body: 'The AI improves from the players who beat it. Because the demonstrations are collected on states the deployed policy actually reached, the aggregated dataset corrects the model where it is genuinely weak rather than where a synthetic opponent happened to wander.',
+                    bullets: [
+                        'Every single-player game a human wins is recorded silently on-device — a compact board snapshot before each action, plus the action taken. No UI, no prompts.',
+                        'The client posts the run to a Lambda Function URL that validates it (wins only, step ceiling, anonymous per-device id) and writes it to a DynamoDB training table with a 90-day TTL',
+                        'A status + score-margin GSI lets the trainer pull pending games widest-win-first, then flag them ingested so no game enters the dataset twice',
+                        'A fetch step re-encodes those snapshots through the exact same feature encoder used for synthetic self-play data, so human and generated samples are interchangeable',
+                        'The aggregated set feeds behaviour-cloning pre-training, then reinforcement fine-tuning as a SageMaker job — a bring-your-own-container image from ECR on a spot GPU instance, checkpointing to S3',
+                        'The finished net is pulled back, traced, converted to CoreML, and dropped into the app bundle, closing the loop on the next release',
+                    ],
+                    diagram: `flowchart LR
+    Rec["<b>1 · Record</b><br/>human beats the AI<br/>state + action per step"]
+    TG[("<b>2 · Store</b><br/>Function URL → DynamoDB<br/>status · scoreDiff GSI")]
+    Enc["<b>3 · Aggregate</b><br/>encode to features<br/>mix with self-play data"]
+    SM["<b>4 · Train</b><br/>SageMaker BYOC job<br/>spot GPU → S3"]
+    CM["<b>5 · Ship</b><br/>CoreML export<br/>into the app bundle"]
+    Rec --> TG --> Enc --> SM --> CM
+    CM -.->|"next release plays a stronger AI"| Rec`,
                 },
                 {
                     heading: 'Design Decisions & Trade-offs',
