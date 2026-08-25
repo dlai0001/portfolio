@@ -86,7 +86,7 @@ export const PROJECTS: Project[] = [
         tech: ['iOS · SwiftUI + SpriteKit', 'API Gateway WebSockets', 'AWS Lambda', 'DynamoDB', 'Amazon SageMaker', 'AWS CDK'],
         architecture: {
             summary:
-                'An entirely serverless multiplayer game. The iOS client holds a persistent WebSocket to an API Gateway WebSocket API; every action is validated by a server-authoritative game engine running in Lambda and persisted to DynamoDB with optimistic locking. The same pure engine is bundled to JavaScript and executed on-device so single-player behaves identically to multiplayer. A separate admin web UI handles bans and bug reports, voice clips transit S3 with a one-day lifecycle, and CloudWatch carries the alarms, logs, and traces. Games where a human beats the AI are silently collected into DynamoDB and aggregated into a DAgger-style retraining loop on SageMaker, whose CoreML output ships in the next build. All infrastructure is defined in AWS CDK across dev and prod stages.',
+                'An entirely serverless multiplayer game. The iOS client holds a persistent WebSocket to an API Gateway WebSocket API; every action is validated by a server-authoritative game engine running in Lambda and persisted to DynamoDB with optimistic locking. The same pure engine is bundled to JavaScript and executed on-device so single-player behaves identically to multiplayer. A separate admin web UI handles bans and bug reports, voice clips transit S3 with a one-day lifecycle, and CloudWatch carries the alarms, logs, and traces. Games where a human beats the AI are silently collected into DynamoDB and aggregated into a behaviour-cloning retraining loop on SageMaker, whose CoreML output ships in the next build. All infrastructure is defined in AWS CDK across dev and prod stages.',
             techStack: [
                 'Native iOS client — SwiftUI UI with a SpriteKit hex board',
                 'Amazon API Gateway — WebSocket API (connect / disconnect / default routes)',
@@ -217,7 +217,7 @@ export const PROJECTS: Project[] = [
                     ],
                 },
                 {
-                    heading: 'DAgger Training Loop — Learning from Human Play',
+                    heading: 'Behaviour Cloning — Learning from Human Play',
                     body: 'The AI improves from the players who beat it. Because the demonstrations are collected on states the deployed policy actually reached, the aggregated dataset corrects the model where it is genuinely weak rather than where a synthetic opponent happened to wander.',
                     bullets: [
                         'Every single-player game a human wins is recorded silently on-device — a compact board snapshot before each action, plus the action taken. No UI, no prompts.',
