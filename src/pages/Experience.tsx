@@ -25,7 +25,10 @@ const experiences: Experience[] = [
         endDate: "Present",
         technologies: "Angular, Spring-Boot",
         responsibilities: [
-            "Full-stack development with Angular and Spring-Boot"
+            "Full-stack development with Angular and Spring-Boot",
+            "Architected AI-assisted development workflows using GitHub Copilot",
+            "Mentor Jr. Developers",
+            "Coordinate work with offshore development teams"
         ]
     },
     {

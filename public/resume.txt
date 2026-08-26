@@ -17,6 +17,10 @@ Professional Work Experience:
 Solomon Page / Voya Financial: Lead Fullstack Engineer              March 2026 - Present
 Angular
 Spring-Boot
+Responsibilities:  Full-stack development with Angular and Spring-Boot.
+Architected AI-assisted development workflows using GitHub Copilot.
+Mentor Jr. Developers.
+Coordinate work with offshore development teams.
 
 Capital One: Principal Engineer              Jan 2023 - March 2026
 Front-end : Angular
