@@ -74,21 +74,23 @@ export const PROJECTS: Project[] = [
         name: 'Tasha 4 President',
         tagline: 'A dog runs for president, and commentates on the news',
         description:
-            'Tasha 4 President is a generative-AI content pipeline that publishes a daily blog post in the voice of a fictitious presidential candidate — my dog — commentating on the day’s news. EventBridge starts a Step Functions workflow that gathers headlines, writes the commentary with Claude models on Amazon Bedrock, and generates the accompanying artwork with a Stable Diffusion model. The site itself is a server-side-rendered React app running on AWS Lambda behind CloudFront, with Google sign-in via Cognito so readers can comment.',
+            'Tasha 4 President is a generative-AI content pipeline that publishes a daily blog post in the voice of a fictitious presidential candidate — my dog — commentating on the day’s news. EventBridge starts a Step Functions workflow that gathers headlines, writes the commentary with Claude models on Amazon Bedrock, and generates the accompanying artwork with a Stable Diffusion model. Amazon Bedrock Guardrails keep the candidate off inflammatory and obscene ground. The site itself is a server-side-rendered React app running on AWS Lambda behind CloudFront, with Google sign-in via Cognito so readers can comment — and an asynchronous Bedrock screening pass that takes comments down when they carry profanity or hate speech.',
         image: asset('projects/tasha4president.png'),
         imageFit: 'cover',
         imagePosition: 'center 35%', // crop to the candidate's head and suit, not the backdrop
         marketingLink: { label: 'Website', href: 'https://tasha4president.com' },
-        tech: ['Amazon Bedrock', 'AWS Step Functions', 'Amazon EventBridge', 'Stable Diffusion', 'React SSR on Lambda', 'Cognito + Google', 'DynamoDB'],
+        tech: ['Amazon Bedrock', 'Bedrock Guardrails', 'AWS Step Functions', 'Amazon EventBridge', 'Stable Diffusion', 'React SSR on Lambda', 'Cognito + Google', 'SQS', 'DynamoDB'],
         architecture: {
             summary:
-                'Two serverless halves that meet in DynamoDB. The generation side is scheduled: an EventBridge rule starts an AWS Step Functions state machine that ingests the day’s news, prompts Claude models on Amazon Bedrock to write the post in the candidate’s voice, generates the artwork with a Stable Diffusion model, and writes the finished post to DynamoDB with its images in S3. The reader side is a server-side-rendered React app running in AWS Lambda behind CloudFront: the Lambda renders each post on request, and readers who sign in with Google through a Cognito user pool can leave comments, which are stored in DynamoDB alongside the posts.',
+                'Two serverless halves that meet in DynamoDB. The generation side is scheduled: an EventBridge rule starts an AWS Step Functions state machine that ingests the day’s news, prompts Claude models on Amazon Bedrock to write the post in the candidate’s voice, generates the artwork with a Stable Diffusion model, and writes the finished post to DynamoDB with its images in S3. Amazon Bedrock Guardrails sit on those model invocations: a story that trips a denied topic or content filter is dropped and the workflow moves on to the next candidate headline. The reader side is a server-side-rendered React app running in AWS Lambda behind CloudFront: the Lambda renders each post on request, and readers who sign in with Google through a Cognito user pool can leave comments, which are stored in DynamoDB alongside the posts. Every comment is queued to SQS on write and screened asynchronously by a moderation Lambda calling Bedrock — anything carrying profanity or hate speech is taken back down.',
             techStack: [
                 'Amazon EventBridge — scheduled rule that starts each run',
                 'AWS Step Functions — orchestrates the generation workflow end to end',
                 'AWS Lambda — generation tasks, and the SSR request handler',
                 'Amazon Bedrock (Claude) — writes the post text in the candidate’s voice',
                 'Amazon Bedrock (Stable Diffusion) — generates the post artwork',
+                'Amazon Bedrock Guardrails — denied topics and content filters on every generation',
+                'Amazon SQS — queues each new comment for asynchronous screening',
                 'React (SSR) — rendered per request in Lambda, not pre-built to static HTML',
                 'Amazon CloudFront — CDN in front of the SSR origin and the image bucket',
                 'Amazon Cognito — user pool federating Google as an identity provider',
@@ -105,7 +107,9 @@ export const PROJECTS: Project[] = [
       SFN["AWS Step Functions<br/>workflow orchestration"]
       Ingest["Lambda<br/>ingest headlines"]
       Text["Amazon Bedrock<br/>Claude · write commentary"]
+      Guard{"Bedrock Guardrails<br/>denied topics · content filters"}
       Image["Amazon Bedrock<br/>Stable Diffusion · artwork"]
+      Publish["Lambda<br/>assemble & publish post"]
     end
     subgraph Data["Data"]
       DDB[("DynamoDB<br/>posts · comments")]
@@ -115,15 +119,22 @@ export const PROJECTS: Project[] = [
       CF["Amazon CloudFront<br/>CDN"]
       SSR["AWS Lambda<br/>React SSR handler"]
       Cog["Amazon Cognito<br/>user pool · Google IdP"]
+      Q[["Amazon SQS<br/>comment screening queue"]]
+      Mod["AWS Lambda<br/>moderation worker"]
+      ModBR["Amazon Bedrock<br/>profanity · hate speech screen"]
     end
     EB -->|"start execution"| SFN
     SFN --> Ingest
     News -->|"articles"| Ingest
     Ingest -->|"story context"| Text
     SFN --> Text
-    Text -->|"image prompt"| Image
+    Text --> Guard
+    Guard -->|"blocked · skip story"| Ingest
+    Guard -->|"cleared · image prompt"| Image
     SFN --> Image
-    Text -->|"post record"| DDB
+    Guard -->|"approved copy"| Publish
+    Image --> Publish
+    Publish -->|"post record"| DDB
     Image -->|"generated images"| S3
     Reader --> CF
     CF -->|"page requests"| SSR
@@ -132,6 +143,11 @@ export const PROJECTS: Project[] = [
     Reader -->|"sign in"| Cog
     Cog <--> Google
     Cog -.->|"verified identity"| SSR
+    SSR -->|"new comment"| Q
+    Q --> Mod
+    Mod --> ModBR
+    ModBR -.->|"verdict"| Mod
+    Mod -->|"clear or take down"| DDB
     SFN -.->|"execution history"| CW["CloudWatch<br/>logs · alarms"]`,
             sections: [
                 {
@@ -159,6 +175,17 @@ export const PROJECTS: Project[] = [
                     ],
                 },
                 {
+                    heading: 'Editorial Guardrails',
+                    body: 'Nothing is reviewed by a human before it goes live, so the guardrails are the editorial policy. Amazon Bedrock Guardrails are attached to the generation calls, keeping the candidate off inflammatory and obscene ground without that judgement living in the prompt, where a model could talk itself out of it.',
+                    bullets: [
+                        'Amazon Bedrock Guardrails screen the generation for inflammatory and obscene topics',
+                        'Denied topics and content filters are configured on the guardrail, not buried in prompt text',
+                        'A story that trips the guardrail is skipped — the workflow moves on to the next candidate headline',
+                        'Because the check is a managed policy, tightening it is a configuration change rather than a redeploy',
+                        'The satire stays on the politics; the guardrail keeps it off the topics a dog candidate has no business on',
+                    ],
+                },
+                {
                     heading: 'Web App (React SSR on Lambda)',
                     bullets: [
                         'The site is a server-side-rendered React app, rendered per request inside AWS Lambda',
@@ -178,8 +205,20 @@ export const PROJECTS: Project[] = [
                     ],
                 },
                 {
+                    heading: 'Comment Moderation',
+                    body: 'Reader comments go through their own automated approval pass. A comment is written and queued the moment it is submitted; a moderation worker screens it asynchronously with Bedrock and takes it back down if it carries profanity or hate speech.',
+                    bullets: [
+                        'Each new comment is written to DynamoDB and queued to Amazon SQS in the same request',
+                        'A moderation Lambda consumes the queue and asks Bedrock to screen the text for profanity and hate speech',
+                        'Screening runs asynchronously, so posting a comment never waits on a model call',
+                        'A comment appears immediately and is removed if the screen rejects it',
+                        'The author gets a toast telling them the comment failed to post, so they can edit it and try again',
+                        'SQS retries absorb a transient model or Lambda failure without losing the comment',
+                    ],
+                },
+                {
                     heading: 'Design Decisions & Trade-offs',
-                    body: 'Step Functions rather than a single long-running Lambda: a generation run is a handful of slow, independently failure-prone calls, and expressing it as a state machine makes the retries, the timeouts, and the point of failure visible without writing orchestration code. SSR on Lambda rather than a fully static build is what buys the comment section — comments change between builds, so the page has to be rendered at request time, and doing that in Lambda keeps the idle cost of the site at zero while CloudFront absorbs the repeat traffic. Federating Google through Cognito means no password storage and no session infrastructure of my own. Bedrock keeps both the text and image models behind one AWS API and IAM boundary, so swapping the model backing either stage is a configuration change, not a new integration. The trade-off of a fully hands-off pipeline is editorial control: nothing is reviewed before it goes live, which is acceptable for a satire site and would not be for anything with real stakes.',
+                    body: 'Step Functions rather than a single long-running Lambda: a generation run is a handful of slow, independently failure-prone calls, and expressing it as a state machine makes the retries, the timeouts, and the point of failure visible without writing orchestration code. SSR on Lambda rather than a fully static build is what buys the comment section — comments change between builds, so the page has to be rendered at request time, and doing that in Lambda keeps the idle cost of the site at zero while CloudFront absorbs the repeat traffic. Federating Google through Cognito means no password storage and no session infrastructure of my own. Bedrock keeps both the text and image models behind one AWS API and IAM boundary, so swapping the model backing either stage is a configuration change, not a new integration. Both the articles and the comments are screened by model rather than by a person, which is the only way a hands-off pipeline stays publishable — Bedrock Guardrails gate generation up front, while comment screening runs after the write so that a reader posting never blocks on a model call. That ordering is a deliberate trade: a flagged comment is visible for the seconds before the worker pulls it, in exchange for a comment box that always feels instant. The residual trade-off of the whole design is editorial control: nothing is reviewed by a human before it goes live, which is acceptable for a satire site with automated guardrails and would not be for anything with real stakes.',
                 },
             ],
         },
