@@ -70,6 +70,98 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
 export const PROJECTS: Project[] = [
     {
+        slug: 'tasha4president',
+        name: 'Tasha 4 President',
+        tagline: 'A dog runs for president, and commentates on the news',
+        description:
+            'Tasha 4 President is a generative-AI content pipeline that publishes a daily blog post in the voice of a fictitious presidential candidate — my dog — commentating on the day’s news. EventBridge starts a Step Functions workflow that gathers headlines, writes the commentary with Claude models on Amazon Bedrock, generates the accompanying artwork with a Stable Diffusion model, and publishes the finished post to a static site on S3 behind CloudFront.',
+        image: asset('projects/tasha4president.png'),
+        imageFit: 'cover',
+        imagePosition: 'center 35%', // crop to the candidate's head and suit, not the backdrop
+        marketingLink: { label: 'Website', href: 'https://tasha4president.com' },
+        tech: ['Amazon Bedrock', 'AWS Step Functions', 'Amazon EventBridge', 'Stable Diffusion', 'S3 + CloudFront', 'Serverless'],
+        architecture: {
+            summary:
+                'A scheduled, fully serverless content-automation pipeline. An EventBridge rule fires on a schedule and starts an AWS Step Functions state machine, which orchestrates the whole run: ingest the day’s news, prompt Claude models on Amazon Bedrock to write the post in the candidate’s voice, generate illustrations for it with a Stable Diffusion image model, then assemble and publish the post to a static site served from Amazon S3 through CloudFront. Step Functions holds the orchestration — sequencing, retries, and error handling — so each Lambda task stays small and single-purpose, and a failed generation step never leaves a half-published post on the site.',
+            techStack: [
+                'Amazon EventBridge — scheduled rule that starts each run',
+                'AWS Step Functions — orchestrates the generation workflow end to end',
+                'AWS Lambda — task functions for ingestion, generation, and publishing',
+                'Amazon Bedrock (Claude) — writes the post text in the candidate’s voice',
+                'Amazon Bedrock (Stable Diffusion) — generates the post artwork',
+                'Amazon S3 — generated assets and the published static site',
+                'Amazon CloudFront — CDN in front of the site bucket',
+                'CloudWatch — run logs and failure alarms',
+            ],
+            diagram: `flowchart TD
+    News["News sources<br/>the day's headlines"]
+    subgraph AWS["AWS Cloud (serverless)"]
+      EB["Amazon EventBridge<br/>scheduled rule"]
+      SFN["AWS Step Functions<br/>workflow orchestration"]
+      Ingest["Lambda<br/>ingest headlines"]
+      Text["Amazon Bedrock<br/>Claude · write commentary"]
+      Image["Amazon Bedrock<br/>Stable Diffusion · artwork"]
+      Publish["Lambda<br/>assemble & publish post"]
+      S3[("Amazon S3<br/>assets · static site")]
+      CF["Amazon CloudFront<br/>CDN"]
+      CW["CloudWatch<br/>logs · alarms"]
+    end
+    Reader["Readers<br/>tasha4president.com"]
+    EB -->|"start execution"| SFN
+    SFN --> Ingest
+    News -->|"articles"| Ingest
+    Ingest -->|"story context"| Text
+    SFN --> Text
+    Text -->|"post copy · image prompt"| Image
+    SFN --> Image
+    Text --> Publish
+    Image --> Publish
+    Publish -->|"post HTML + images"| S3
+    S3 --> CF
+    CF --> Reader
+    SFN -.->|"execution history"| CW`,
+            sections: [
+                {
+                    heading: 'Overview',
+                    body: 'Tasha 4 President is a satire site with a serious pipeline behind it: my dog, Tasha, is running for president, and every day she weighs in on the news. The premise is the fun part — the point of the project was to build a hands-off generative-AI content pipeline that goes from a schedule trigger to a published, illustrated blog post with no human in the loop.',
+                },
+                {
+                    heading: 'Scheduling & Orchestration',
+                    bullets: [
+                        'An Amazon EventBridge rule fires on a schedule and starts a Step Functions execution',
+                        'The state machine sequences every stage of the run: ingest → write → illustrate → publish',
+                        'Retries and error handling live in the state machine definition rather than in the task code',
+                        'Each step is an independently testable Lambda task; the workflow holds the flow control',
+                        'A failed step stops the run before publishing, so a partial post never reaches the site',
+                    ],
+                },
+                {
+                    heading: 'Content Generation (Bedrock)',
+                    bullets: [
+                        'The day’s headlines are gathered and passed in as context for the post',
+                        'Claude models on Amazon Bedrock write the commentary in the candidate’s persona',
+                        'Prompting carries the character’s voice and the running campaign bit from post to post',
+                        'A Stable Diffusion model on Bedrock generates the artwork that accompanies each post',
+                        'Text and image generation share the same run, so the illustration matches that day’s story',
+                    ],
+                },
+                {
+                    heading: 'Publishing (S3 + CloudFront)',
+                    bullets: [
+                        'The publish task assembles the post and writes it, with its generated images, to Amazon S3',
+                        'The site is entirely static — no servers, no database, nothing to patch between runs',
+                        'CloudFront fronts the bucket for caching and TLS on the custom domain',
+                        'Generated assets live in S3 alongside the site, so every published post keeps its artwork',
+                    ],
+                },
+                {
+                    heading: 'Design Decisions & Trade-offs',
+                    body: 'Step Functions rather than a single long-running Lambda: a generation run is a handful of slow, independently failure-prone calls, and expressing it as a state machine makes the retries, the timeouts, and the point of failure visible without writing orchestration code. Generation happens on a schedule and the output is a static site, so reader traffic never touches a model — the expensive work is done once per run and served from CloudFront thereafter, which keeps the steady-state cost of the site near zero. Bedrock keeps both the text and image models behind one AWS API and IAM boundary, so swapping the model backing either stage is a configuration change, not a new integration. The trade-off of a fully hands-off pipeline is editorial control: nothing is reviewed before it goes live, which is acceptable for a satire site and would not be for anything with real stakes.',
+                },
+            ],
+        },
+    },
+    {
         slug: 'hexlands',
         name: 'Hexlands',
         tagline: 'Online tile-based multiplayer strategy game',
