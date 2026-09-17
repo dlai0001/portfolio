@@ -70,6 +70,121 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
 export const PROJECTS: Project[] = [
     {
+        slug: 'tasha4president',
+        name: 'Tasha 4 President',
+        tagline: 'A dog runs for president, and commentates on the news',
+        description:
+            'Tasha 4 President is a generative-AI content pipeline that publishes a daily blog post in the voice of a fictitious presidential candidate — my dog — commentating on the day’s news. EventBridge starts a Step Functions workflow that gathers headlines, writes the commentary with Claude models on Amazon Bedrock, and generates the accompanying artwork with a Stable Diffusion model. The site itself is a server-side-rendered React app running on AWS Lambda behind CloudFront, with Google sign-in via Cognito so readers can comment.',
+        image: asset('projects/tasha4president.png'),
+        imageFit: 'cover',
+        imagePosition: 'center 35%', // crop to the candidate's head and suit, not the backdrop
+        marketingLink: { label: 'Website', href: 'https://tasha4president.com' },
+        tech: ['Amazon Bedrock', 'AWS Step Functions', 'Amazon EventBridge', 'Stable Diffusion', 'React SSR on Lambda', 'Cognito + Google', 'DynamoDB'],
+        architecture: {
+            summary:
+                'Two serverless halves that meet in DynamoDB. The generation side is scheduled: an EventBridge rule starts an AWS Step Functions state machine that ingests the day’s news, prompts Claude models on Amazon Bedrock to write the post in the candidate’s voice, generates the artwork with a Stable Diffusion model, and writes the finished post to DynamoDB with its images in S3. The reader side is a server-side-rendered React app running in AWS Lambda behind CloudFront: the Lambda renders each post on request, and readers who sign in with Google through a Cognito user pool can leave comments, which are stored in DynamoDB alongside the posts.',
+            techStack: [
+                'Amazon EventBridge — scheduled rule that starts each run',
+                'AWS Step Functions — orchestrates the generation workflow end to end',
+                'AWS Lambda — generation tasks, and the SSR request handler',
+                'Amazon Bedrock (Claude) — writes the post text in the candidate’s voice',
+                'Amazon Bedrock (Stable Diffusion) — generates the post artwork',
+                'React (SSR) — rendered per request in Lambda, not pre-built to static HTML',
+                'Amazon CloudFront — CDN in front of the SSR origin and the image bucket',
+                'Amazon Cognito — user pool federating Google as an identity provider',
+                'DynamoDB — generated posts and reader comments',
+                'Amazon S3 — generated artwork and static front-end assets',
+                'CloudWatch — run logs and failure alarms',
+            ],
+            diagram: `flowchart TD
+    News["News sources<br/>the day's headlines"]
+    Reader["Readers<br/>tasha4president.com"]
+    Google["Google<br/>identity provider"]
+    subgraph Gen["Generation (scheduled)"]
+      EB["Amazon EventBridge<br/>scheduled rule"]
+      SFN["AWS Step Functions<br/>workflow orchestration"]
+      Ingest["Lambda<br/>ingest headlines"]
+      Text["Amazon Bedrock<br/>Claude · write commentary"]
+      Image["Amazon Bedrock<br/>Stable Diffusion · artwork"]
+    end
+    subgraph Data["Data"]
+      DDB[("DynamoDB<br/>posts · comments")]
+      S3[("Amazon S3<br/>artwork · static assets")]
+    end
+    subgraph Web["Web (per request)"]
+      CF["Amazon CloudFront<br/>CDN"]
+      SSR["AWS Lambda<br/>React SSR handler"]
+      Cog["Amazon Cognito<br/>user pool · Google IdP"]
+    end
+    EB -->|"start execution"| SFN
+    SFN --> Ingest
+    News -->|"articles"| Ingest
+    Ingest -->|"story context"| Text
+    SFN --> Text
+    Text -->|"image prompt"| Image
+    SFN --> Image
+    Text -->|"post record"| DDB
+    Image -->|"generated images"| S3
+    Reader --> CF
+    CF -->|"page requests"| SSR
+    CF -->|"images · assets"| S3
+    SSR <-->|"read posts · read/write comments"| DDB
+    Reader -->|"sign in"| Cog
+    Cog <--> Google
+    Cog -.->|"verified identity"| SSR
+    SFN -.->|"execution history"| CW["CloudWatch<br/>logs · alarms"]`,
+            sections: [
+                {
+                    heading: 'Overview',
+                    body: 'Tasha 4 President is a satire site with a serious pipeline behind it: my dog, Tasha, is running for president, and every day she weighs in on the news. The premise is the fun part — the point of the project was to build a hands-off generative-AI content pipeline that goes from a schedule trigger to a published, illustrated blog post with no human in the loop, and then to put a real web app in front of it so readers can actually argue with the candidate.',
+                },
+                {
+                    heading: 'Scheduling & Orchestration',
+                    bullets: [
+                        'An Amazon EventBridge rule fires on a schedule and starts a Step Functions execution',
+                        'The state machine sequences every stage of the run: ingest → write → illustrate → publish',
+                        'Retries and error handling live in the state machine definition rather than in the task code',
+                        'Each step is an independently testable Lambda task; the workflow holds the flow control',
+                        'A failed step stops the run before publishing, so a partial post never reaches the site',
+                    ],
+                },
+                {
+                    heading: 'Content Generation (Bedrock)',
+                    bullets: [
+                        'The day’s headlines are gathered and passed in as context for the post',
+                        'Claude models on Amazon Bedrock write the commentary in the candidate’s persona',
+                        'Prompting carries the character’s voice and the running campaign bit from post to post',
+                        'A Stable Diffusion model on Bedrock generates the artwork that accompanies each post',
+                        'Text and image generation share the same run, so the illustration matches that day’s story',
+                    ],
+                },
+                {
+                    heading: 'Web App (React SSR on Lambda)',
+                    bullets: [
+                        'The site is a server-side-rendered React app, rendered per request inside AWS Lambda',
+                        'CloudFront sits in front of the Lambda origin for caching and TLS on the custom domain',
+                        'Post content is read from DynamoDB at render time, so a new post is live the moment the workflow writes it',
+                        'Generated artwork and the client bundle are served from S3 through the same distribution',
+                        'Rendering on the server keeps posts crawlable and the first paint fast, with no build step per post',
+                    ],
+                },
+                {
+                    heading: 'Sign-in & Comments',
+                    bullets: [
+                        'Readers sign in with Google through an Amazon Cognito user pool that federates Google as an identity provider',
+                        'The app never handles Google credentials itself — it validates the tokens Cognito issues',
+                        'Signed-in readers can post comments on any article',
+                        'Comments are stored in DynamoDB alongside the generated posts and rendered with the page',
+                    ],
+                },
+                {
+                    heading: 'Design Decisions & Trade-offs',
+                    body: 'Step Functions rather than a single long-running Lambda: a generation run is a handful of slow, independently failure-prone calls, and expressing it as a state machine makes the retries, the timeouts, and the point of failure visible without writing orchestration code. SSR on Lambda rather than a fully static build is what buys the comment section — comments change between builds, so the page has to be rendered at request time, and doing that in Lambda keeps the idle cost of the site at zero while CloudFront absorbs the repeat traffic. Federating Google through Cognito means no password storage and no session infrastructure of my own. Bedrock keeps both the text and image models behind one AWS API and IAM boundary, so swapping the model backing either stage is a configuration change, not a new integration. The trade-off of a fully hands-off pipeline is editorial control: nothing is reviewed before it goes live, which is acceptable for a satire site and would not be for anything with real stakes.',
+                },
+            ],
+        },
+    },
+    {
         slug: 'hexlands',
         name: 'Hexlands',
         tagline: 'Online tile-based multiplayer strategy game',
