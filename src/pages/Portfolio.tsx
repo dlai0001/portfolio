@@ -33,7 +33,7 @@ const CardImage: React.FC<{ project: Project }> = ({ project }) => {
             <Box
                 aria-hidden
                 sx={{
-                    height: 160,
+                    height: 200,
                     borderRadius: 2,
                     mb: 2,
                     display: 'flex',
@@ -68,7 +68,7 @@ const CardImage: React.FC<{ project: Project }> = ({ project }) => {
         <Box
             aria-hidden
             sx={{
-                height: 160,
+                height: 200,
                 borderRadius: 2,
                 mb: 2,
                 display: 'flex',
