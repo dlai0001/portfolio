@@ -77,7 +77,7 @@ export const PROJECTS: Project[] = [
             'Tasha 4 President is a generative-AI content pipeline that publishes a daily blog post in the voice of a fictitious presidential candidate — my dog — commentating on the day’s news. EventBridge starts a Step Functions workflow that gathers headlines, writes the commentary with Claude models on Amazon Bedrock, and generates the accompanying artwork with a Stable Diffusion model. Amazon Bedrock Guardrails keep the candidate off inflammatory and obscene ground. The site itself is a server-side-rendered React app running on AWS Lambda behind CloudFront, with Google sign-in via Cognito so readers can comment — and an asynchronous Bedrock screening pass that takes comments down when they carry profanity or hate speech.',
         image: asset('projects/tasha4president.png'),
         imageFit: 'cover',
-        imagePosition: 'center 35%', // crop to the candidate's head and suit, not the backdrop
+        imagePosition: 'center 48%', // frame the candidate's head through the campaign button
         marketingLink: { label: 'Website', href: 'https://tasha4president.com' },
         tech: ['Amazon Bedrock', 'Bedrock Guardrails', 'AWS Step Functions', 'Amazon EventBridge', 'Stable Diffusion', 'React SSR on Lambda', 'Cognito + Google', 'SQS', 'DynamoDB'],
         architecture: {
